@@ -363,7 +363,13 @@
 	text-decoration: underline;;
 }
 
-/* Coloeres */
+/*** Alineacion **/
+.align-left{
+	text-align:left;
+}
+
+
+/* Colores */
 
 .green
 {

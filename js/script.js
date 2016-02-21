@@ -70,10 +70,98 @@ $('#usr-log-form').formValidation({
 
 
 
+/***** Validador de Formulario de registro de inspeccion*
 
+$("#register-submit").click(function(){
+		$("#reg-inspec").data('formValidation').validate();
+	});
 
-
-
+**/
+ $('#reg-inspec').formValidation({
+       locale: 'es_ES',
+        framework: 'bootstrap',     
+        icon: { valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            razon: {
+                validators: {
+                    notEmpty: {
+                        message: 'No admite valor vacio'
+                    } 
+                }
+            },
+            ente: {
+                validators: {
+                    notEmpty: {
+                        message: 'No admite valor vacio'
+                    } 
+                }
+            },
+            rif: {
+                validators: {
+                    notEmpty: {
+                        message: 'No admite valor vacio'
+                    },
+                  numeric: {
+                  	message:"deben ser valores numericos"
+	                  } 
+                }
+            },
+             funcionario: {
+                validators: {
+                    notEmpty: {
+                        message: 'No admite valor vacio'
+                    } 
+                }
+            }
+        }
+        }).on('success.field.fv', function(e, data) {
+        if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+            data.fv.disableSubmitButtons(true);
+        }
+    }).on('err.form.fv', function(e,data) {
+    	$(".dropdown-toggle").dropdown('toggle');
+    }).on('success.form.fv', function(e) {
+		e.preventDefault();
+		var form = $(e.target);
+		var fv = form.data('formValidation');
+		var method = "&method="+$(this).data("method");
+		$.ajax({
+			url: form.attr('action'), // la URL para la petición
+           data: form.serialize() + method, // la información a enviar
+            type: 'POST', // especifica si será una petición POST o GET
+            dataType: 'json', // el tipo de información que se espera de respuesta            
+            success: function (data) {            	
+            	// código a ejecutar si la petición es satisfactoria;
+            	// código a ejecutar si la petición es satisfactoria;
+            	// console.log(data);
+	            
+	            if(data.result==='OK'){
+	            alert("registro con exito");	
+	            window.reload();
+	            }
+	            
+	            if (data.result === 'error'){
+	            	for (var field in data.fields) {
+	        			fv
+	                    // Show the custom message
+	                    .updateMessage(field, 'blank', data.fields[field])
+	                    // Set the field as invalid
+	                    .updateStatus(field, 'INVALID', 'blank');
+	        			setTimeout(function(){
+	        				$("#"+field).focus();	       			
+	        			}, 10);
+	            	}
+	            	
+	            } 
+          	},// código a ejecutar si la petición falla;
+            error: function (xhr, status) {
+            	alert(status);
+            }
+        });
+    });	
 
 
 	$('#usr-act-form-nat').formValidation({
