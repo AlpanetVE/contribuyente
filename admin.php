@@ -3,8 +3,8 @@
 	<?php  include "estilos-scripts.php";
 		   require_once 'paginas/secure.php';
 	?>
- 	<body class="body-index">
- <div >
+ 	<body class="">
+ <div>
 <?php include "paginas/admin/p_admin.php"; ?>
 </div>
   </body>

@@ -27,4 +27,14 @@ class inspeccion {
 		return $result;
 	}
 	
+	
+	public function listarInspecciones(){
+		$sql=new bd();
+		$condicion='status=1';
+		$result=$sql->doFullSelect($this->table, $condicion);
+		if(!empty ($result))
+			return $result;
+		else 
+			return false;
+	}
 }

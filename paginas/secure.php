@@ -5,7 +5,7 @@
 if($_SESSION["autentica"] != "1")
 { 
   //Si no hay sesión activa, lo direccionamos al index.php (inicio de sesión) 
-  header("Location: ../login.php"); 
+  header("Location: login.php"); 
   exit(); 
 } 
 ?>

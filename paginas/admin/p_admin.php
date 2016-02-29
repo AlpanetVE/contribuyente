@@ -1,9 +1,9 @@
 <div>
-	<h1> Estas logueado </h1>
+	<h3> Bienvenido </h3>
 	<?php echo $_SESSION["seudonimo"]; ?>
 	
-	<div class="container">
-	<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+	<div class="container-fluid">
+	<div class="">
 		<?php include("temas/menu-admin.php"); ?>
 	</div>
 	<!--<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">

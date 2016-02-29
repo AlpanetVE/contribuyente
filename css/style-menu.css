@@ -32,9 +32,9 @@ ul.accordion li  a {
  	
  	
  	border: #E4E4E4 1px solid;
- 	-webkit-box-shadow: 0px 1px 41px -1px rgba(0,0,0,0.5);
--moz-box-shadow: 0px 1px 41px -1px rgba(0,0,0,0.5);
-box-shadow: 0px 1px 41px -1px rgba(0,0,0,0.5);
+ 	-webkit-box-shadow: 0px 1px 18px -1px rgba(0,0,0,0.5);
+-moz-box-shadow: 0px 1px 18px -1px rgba(0,0,0,0.5);
+box-shadow: 0px 1px 18px -1px rgba(0,0,0,0.5);
  }
 
 .accordion .link {

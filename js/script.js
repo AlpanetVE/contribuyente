@@ -79,11 +79,12 @@ $("#register-submit").click(function(){
 **/
  $('#reg-inspec').formValidation({
        locale: 'es_ES',
-        framework: 'bootstrap',     
+        framework: 'bootstrap',  
+        err: { container: 'tooltip' },   
         icon: { valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
-        },
+        },   
         fields: {
             razon: {
                 validators: {
@@ -140,7 +141,7 @@ $("#register-submit").click(function(){
 	            
 	            if(data.result==='OK'){
 	            alert("registro con exito");	
-	            window.reload();
+	           window.location.href = "admin.php";
 	            }
 	            
 	            if (data.result === 'error'){
