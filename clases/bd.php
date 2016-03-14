@@ -54,6 +54,7 @@ class bd extends PDO {
 			$condition = "WHERE $condition";
 		}
 		$stament = "SELECT {$columns} FROM {$table} {$condition}";
+		//var_dump($stament);
 		try {
 			$sql = $this->query ( $stament );
 			if ($sql->rowCount () > 0) {
@@ -62,6 +63,7 @@ class bd extends PDO {
 				return false;
 			}
 		} catch ( PDOException $ex ) {
+			var_dump($stament);
 			return $this->showError ( $ex );
 		}
 	}

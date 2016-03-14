@@ -753,8 +753,9 @@ box-shadow: 2px 2px 12px -5px rgba(0,0,0,0.75);
 
 .form-control-header {
 	display: block;
-	width: 150%;
+	width: 12%;
 	padding: 6px 12px;
+	margin: 5px;
 	font-size: 14px;
 	line-height: 1.42857143;
 	color: #555;

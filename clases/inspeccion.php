@@ -37,4 +37,10 @@ class inspeccion {
 		else 
 			return false;
 	}
+	
+	/*public function listarFiltrada($razon=NULL,$ente=NULL,$rif=NULL,$funcionario=NULL,$observacion=NULL){
+		
+		
+	}*/
+	
 }
