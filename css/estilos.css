@@ -750,6 +750,10 @@ box-shadow: 2px 2px 12px -5px rgba(0,0,0,0.75);
 
 /* ************* Formularios ************* */
 
+#filtro{
+	padding-bottom: 20px;
+}
+
 
 .form-control-header {
 	display: block;

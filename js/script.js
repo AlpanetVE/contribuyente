@@ -56,7 +56,7 @@ $('#usr-log-form').formValidation({
 	            	}
 	            	
 	            } else{
-	            	window.location.href = "admin.php";
+	            	window.location.href = "list.php";
 	            	
                 } 
           	},// código a ejecutar si la petición falla;
@@ -141,7 +141,7 @@ $("#register-submit").click(function(){
 	            
 	            if(data.result==='OK'){
 	            alert("registro con exito");	
-	           window.location.href = "admin.php";
+	           window.location.href = "list.php";
 	            }
 	            
 	            if (data.result === 'error'){

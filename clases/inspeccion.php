@@ -38,6 +38,14 @@ class inspeccion {
 			return false;
 	}
 	
+	public function getInspecciones($campos){
+		$sql=new bd();
+		$consulta="select $campos FROM inspeccion WHERE status=1 ";
+		
+		//echo $consulta;
+        $result=$sql->query($consulta);
+		return $result;
+	}
 	/*public function listarFiltrada($razon=NULL,$ente=NULL,$rif=NULL,$funcionario=NULL,$observacion=NULL){
 		
 		

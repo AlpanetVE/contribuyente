@@ -1,4 +1,4 @@
-<div class="container center-container login-admin" style="width:500px; padding:30px; margin-top: 10%">
+<div class="container center-container login-admin" style="width:500px; padding:30px; margin-top: 6%">
 <form id="usr-log-form" name="usr-log-form" action="function/f_usuarios.php" method="POST">
 					<ul >
 				 			<div class="center" style=""> 
