@@ -1,6 +1,6 @@
 ﻿
-//fb
-var scopes='email,user_location,publish_actions,user_photos,manage_pages,publish_pages',doing_fb=false,doing_fb_log=false;
+//fb 
+/*var scopes='email,user_location,publish_actions,user_photos,manage_pages,publish_pages',doing_fb=false,doing_fb_log=false;
 
 window.fbAsyncInit = function() {
 	FB.init({
@@ -283,4 +283,4 @@ $(document).ready(function(){
 		},{auth_type:'reauthenticate',scope:scopes});
 		return false;
 	});	
-});
+});*/

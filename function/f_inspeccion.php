@@ -41,7 +41,7 @@ function registrar() {
 
 function resbusqueda(){
 	
-	$rif_busq=filter_input(INPUT_POST,"buscar_rif");
+	//$rif_busq=filter_input(INPUT_POST,"buscar_rif");
 	
 	$condicion="status=1 ";
 	
@@ -60,7 +60,7 @@ function resbusqueda(){
 		
 	if(isset($_POST['buscar_rif']) && $_POST['buscar_rif']!="")
 		{
-			$rif_busq=filter_input(INPUT_POST,"buscar_razon");
+			$rif_busq=filter_input(INPUT_POST,"buscar_rif");
 		   $condicion.= "AND rif LIKE '%$rif_busq%'";
 		
 		}	
@@ -86,6 +86,7 @@ function resbusqueda(){
 	 	
 		 ?>
 		 <?php 
+		 echo $condicion;
 		foreach ($res as $fila) {
                 ?>            
                 <tr>
