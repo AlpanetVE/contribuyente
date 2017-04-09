@@ -53,13 +53,13 @@ switch ($_POST["method"]) {
 		break;
 	case "recover":
 		recoverPassword();
-		break;	
+		break;
 	case "update_user":
 		updateUser();
 		break;
 	case "restablecer":
 		restablecerPassword();
-		break;	
+		break;
 	default :
 		echo "error";
 		break;
@@ -111,12 +111,12 @@ function actEmail(){
 	$usuario = new usuario($_SESSION["id"]);
 	$bd = new bd ();
 	$values = array (
-			"email" => filter_input ( INPUT_POST, "email" )			
+			"email" => filter_input ( INPUT_POST, "email" )
 	);
 	if($usuario->a_email == $values["email"]){
 		echo json_encode ( array (
 				"result" => "OK"
-		) );		
+		) );
 	}else {
 		if ($bd->valueExist ( "usuarios_accesos", $values['email'], "email" )) {
 			echo json_encode ( array (
@@ -172,7 +172,7 @@ function actNat() {
 			"identificacion" => filter_input ( INPUT_POST, "p_identificacion" ) ,
 			"nombre" =>  (filter_input ( INPUT_POST, "p_nombre" )),
 			"apellido" =>filter_input ( INPUT_POST, "p_apellido" ),
-			
+
 	);
 	$values_usu = array(
 			"estados_id" => filter_input ( INPUT_POST, "p_estado" ),
@@ -186,7 +186,7 @@ function actNat() {
 				"result" => "OK"
 		) );
 	}else {
-		if ($bd->valueExist ( "usuarios_naturales", $values_nat['identificacion'], "identificacion" )) {	
+		if ($bd->valueExist ( "usuarios_naturales", $values_nat['identificacion'], "identificacion" )) {
 			echo json_encode ( array (
 					"result" => "error",
 					"fields" => array("p_identificacion" => "El numero de identificacion ya esta en uso")
@@ -261,7 +261,7 @@ function actSocial() {
 			"descripcion" => empty ( $_POST["descripcion"] ) ? NULL : filter_input ( INPUT_POST, "descripcion" ),
 			"facebook" => empty ( $_POST["facebook"] ) ? NULL : filter_input ( INPUT_POST, "facebook"),
 			"twitter" => empty ( $_POST["twitter"] ) ? NULL : filter_input ( INPUT_POST, "twitter"),
-			"website" => empty ( $_POST["website"]  ) ? NULL : filter_input ( INPUT_POST, "website") 
+			"website" => empty ( $_POST["website"]  ) ? NULL : filter_input ( INPUT_POST, "website")
 	);
 	if ($bd->doUpdate ( "usuarios", $values, "id = {$_SESSION["id"]}" )) {
 		echo "OK";
@@ -274,45 +274,45 @@ function fotUser() {
 	session_start();
 	if ($foto->updateFoto ( filter_input ( INPUT_POST, "ruta" ), filter_input ( INPUT_POST, "foto" ), $_SESSION["id"] )) {
 		echo json_encode ( array (
-				"result" => "OK" 
+				"result" => "OK"
 		) );
 	} else {
 		echo json_encode ( array (
-				"result" => "error" 
+				"result" => "error"
 		) );
 	}
 }
 function logUser() {
-	
+
 	$usuario = new usuario ();
 	$bd = new bd ();
 	$login = filter_input ( INPUT_POST, "log_usuario" );
 	$password = filter_input ( INPUT_POST, "log_password" );
-	
-	
-	$field_name="";	
+
+
+	$field_name="";
 	if ($bd->valueExist ( $usuario->u_table, $login, "seudonimo" )) {
-		$field_name="seudonimo";		
+		$field_name="seudonimo";
 	}
-		
+
 	if (!empty($field_name)) {
-		
+
 		$id = $usuario->ingresoUsuario ( array (
-				$field_name => $login 
+				$field_name => $login
 		), $password );
-		
+
 		if ( $id[0] == 2) {
 			$fields ["log_password"] = "La contrase&ntilde;a es incorrecta";
 		}
 		if ( $id[0] == 4) {
 			$fields ["log_usuario"] = "El usuario estan registrados o fueron eliminados";
 		}
-		
+
 	}  else {
 		$fields ["log_usuario"] = "El usuario no esta registrado";
 		$id[0]=0;
 	}
-		
+
 	if ( $id[0] == 1) {
 		echo json_encode ( array (
 				"result" => "OK"
@@ -323,27 +323,67 @@ function logUser() {
 				"result" => "Actualice",
 				"id" => $id[1]
 		) );
-		exit ();		
+		exit ();
 	}else{
 		if (isset ( $fields )) {
 			echo json_encode ( array (
 					"result" => "error",
-					"fields" => $fields 
+					"fields" => $fields
 			) );
 			exit ();
 		}
 	}
 }
+
+function newUser(){
+	$usuario = new usuario();
+		$bd = new bd();
+
+		$nombre=filter_input(INPUT_POST,"nombre");
+		$apellido=filter_input(INPUT_POST,"apellido");
+		$cedula=filter_input(INPUT_POST,"cedula");
+		$usuario=filter_input(INPUT_POST,"usuario");
+		$passwd=filter_input(INPUT_POST,"clave");
+		$cargo=filter_input(INPUT_POST,"cargo");
+
+	// if ($bd->valueExist( $usuario->u_table, $usuario, "seudonimo")) {
+	// 	$fields ["usuario"] = "El usuario no esta disponible";
+//	 }
+//	 if ($bd->valueExist($usuario->u_table, $cedula, "cedula")) {
+//	 	$fields ["cedula"] = "Cedula ya registrada";
+//	 }
+		if (isset ( $fields )) {
+			echo json_encode ( array (
+					"result" => "error",
+					"fields" => $fields
+			) );
+			exit ();
+		}
+		$usuario->setDatos($nombre, $apellido, $cedula ,$usuario, $clave, $cargo);
+		if($usuario->crear()){
+			echo json_encode ( array (
+					"result" => "ok"
+			) );
+		}else{
+			echo json_encode ( array (
+					"result" => "error"
+			) );
+		}
+
+
+}
+
+/*
 function newUser() {
 	$usuario = new usuario ();
 	$foto = new fotos ();
 	$bd = new bd ();
-	
-	
-	
+
+
+
 	if (isset ( $_POST ["type"] )) {
 		$ingresoUsuario = filter_input ( INPUT_POST, "ingresoUsuario" );
-		
+
 		$seudonimo = filter_input ( INPUT_POST, "seudonimo" );
 		if ($bd->valueExist ( $usuario->a_table, $seudonimo, "seudonimo" )) {
 			$fields ["seudonimo"] = "El seudonimo no esta disponible";
@@ -354,7 +394,7 @@ function newUser() {
 		}
 		$password = filter_input ( INPUT_POST, "password" );
 		$descripcion = filter_input ( INPUT_POST, "descripcion" );
-		$id_rol = filter_input ( INPUT_POST, "id_rol" ); 
+		$id_rol = filter_input ( INPUT_POST, "id_rol" );
 		$status_usuarios_id = 1;
 		if ($descripcion == "") {
 			$descripcion = NULL;
@@ -383,39 +423,39 @@ function newUser() {
 		if (isset ( $fields )) {
 			echo json_encode ( array (
 					"result" => "error",
-					"fields" => $fields 
+					"fields" => $fields
 			) );
 			exit ();
-		} 
-		 
-		 
+		}
+
+
 		$usuario->datosAcceso ( $seudonimo, $email, $password ,0, $id_rol, $status_usuarios_id);
 		$usuario->datosStatus ();
 		$usuario->crearUsuario ();
 		$foto->crearFotoUsuario ( $usuario->id, $_POST ["foto"] );
-		
+
 		if($ingresoUsuario=='1'){
 			$usuario->ingresoUsuario( array (
-				"seudonimo" => filter_input ( INPUT_POST, "seudonimo" ) 
+				"seudonimo" => filter_input ( INPUT_POST, "seudonimo" )
 				), filter_input ( INPUT_POST, "password" ) ,NULL);
-		
+
 		}
-		
+
 		echo json_encode ( array (
-				"result" => "ok" 
+				"result" => "ok"
 		) );
 	}
-}
+} */
 	function sendEmail(){
 		ini_set("sendmail_from",$_POST["email"]);
 		$email_to = "apreciodepanacontacto@gmail.com";
 
 		$email_subject = $_POST ['nombre']." te ha contactado!";
-		$email_message = $_POST ['mensaje']."\n\n";		
+		$email_message = $_POST ['mensaje']."\n\n";
 		// Ahora se env&iacute;a el e-mail usando la funci&oacute;n mail() de PHP
 		$headers = 'From: ' . $_POST ['email'] . "\r\n" . 'Reply-To: ' . $_POST ['email'] . "\r\n" . 'X-Mailer: PHP/' . phpversion ();
 		mail ( $email_to, $email_subject, $email_message, $headers );//
-		echo json_encode(array("estado"=>"OK"));		
+		echo json_encode(array("estado"=>"OK"));
 	}
 	function getUsuario(){
 		$usua=new usuario($_POST["id"]);
@@ -432,86 +472,86 @@ function newUser() {
 		$_SESSION["seudonimo"] = $result["seudonimo"];
 		$_SESSION["nivel"] = $result["nivel"];
 		$_SESSION["fotoperfil"] = $foto->buscarFotoUsuario($result["usuarios_id"]);
-		$_SESSION["id_rol"] = $result["id_rol"]; 
+		$_SESSION["id_rol"] = $result["id_rol"];
 		$bd->doUpdate("usuarios_accesos",array("bandera"=>0),"usuarios_id={$_POST["id"]}");
 		echo "OK";
-	}	
-	
+	}
+
 	function updateNot(){
 		$usr = new usuario($_POST["id"]);
 		$act = $usr ->updateNotificaciones($_POST["id"]);
 		echo "ok";
-	}	
+	}
 
-	
+
 	function fotPort() {
 	$foto = new fotos ();
 	session_start();
 	if ($foto->updatePort ( filter_input ( INPUT_POST, "ruta" ), filter_input ( INPUT_POST, "foto" ), $_SESSION["id"] )) {
 		echo json_encode ( array (
-				"result" => "OK" 
+				"result" => "OK"
 		) );
 	} else {
 		echo json_encode ( array (
-				"result" => "error" 
+				"result" => "error"
 		) );
 	}
 	}
-	
-	
+
+
 	function updateStatus(){
-		 
+
 		$usuarios_id=		filter_input ( INPUT_POST, "usuarios_id" );
 		$status_usuarios_id=filter_input ( INPUT_POST, "status_usuarios_id" );
-		
+
 		$usuario = new usuario($usuarios_id);
-		
+
 		//modificamos el estatus del usuario si ya existe el registro
-		$result = $usuario ->updateStatus($usuarios_id, $status_usuarios_id); 
-		
-		
+		$result = $usuario ->updateStatus($usuarios_id, $status_usuarios_id);
+
+
 		if ($result) {
-			
+
 			echo json_encode ( array (
-					"result" => "OK" 
+					"result" => "OK"
 			) );
-			
+
 		} else {
 			echo json_encode ( array (
-					"result" => "error" 
+					"result" => "error"
 			) );
 		}
-		 
-	}		
-	
+
+	}
+
 function recoverPassword(){
 	$usuario = new usuario ();
 	$bd = new bd ();
 	$login = filter_input ( INPUT_POST, "rec_usuario" );
-	
-	$field_name="";	
+
+	$field_name="";
 	if ($bd->valueExist ( $usuario->a_table, $login, "seudonimo" )) {
-		$field_name="seudonimo";		
+		$field_name="seudonimo";
 	}elseif($bd->valueExist ( $usuario->a_table, $login, "email" )){
 		 $field_name="email";
 	}
-	
-		
+
+
 	if (!empty($field_name)) {
-		
+
 		$id = $usuario->recuperaClave ( array (
-				$field_name => $login 
+				$field_name => $login
 		));
-		
+
 		if ( $id[0] == 2) {
 			$fields ["rec_usuario"] = "El usuario o el correo no estan registrados o fueron eliminados";
 		}
-		
+
 	}  else {
 		$fields ["rec_usuario"] = "El usuario o el correo no estan registrados";
 		$id[0]=0;
 	}
-		
+
 	if ( $id[0] == 1) {
 		echo json_encode ( array (
 				"result" => "OK"
@@ -522,50 +562,49 @@ function recoverPassword(){
 		if (isset ( $fields )) {
 			echo json_encode ( array (
 					"result" => "error",
-					"fields" => $fields 
+					"fields" => $fields
 			) );
 			exit ();
 		}
 	}
-		
+
 	}
 
-	
+
 function restablecerPassword(){
 	$password= filter_input ( INPUT_POST, "rec_clave" );
 	$user=filter_input ( INPUT_POST, "usuario" );
 	$usuario=new usuario();
 	$res=$usuario->setNewPassword($user,$password);
-	if($res) 
+	if($res)
 	{	echo json_encode ( array (
-					"result" => "OK" 
+					"result" => "OK"
 			) );
 	}
 	else {
 		echo json_encode ( array (
-					"result" => "error" 
+					"result" => "error"
 			) );
 	}
-	
- }	
-	function updateUser(){ 
-		$usuarios_id=	filter_input ( INPUT_POST, "update_usuarios_id" );		 
+
+ }
+	function updateUser(){
+		$usuarios_id=	filter_input ( INPUT_POST, "update_usuarios_id" );
 		$seudonimo=		filter_input ( INPUT_POST, "update_seudonimo" );
 		$email	=		filter_input ( INPUT_POST, "update_email" );
-		$id_rol=		filter_input ( INPUT_POST, "update_id_rol_select" );		
-		
-		$password= 		filter_input ( INPUT_POST, "update_password" );  
- 
+		$id_rol=		filter_input ( INPUT_POST, "update_id_rol_select" );
+
+		$password= 		filter_input ( INPUT_POST, "update_password" );
+
 
 		$usuario = new usuario($usuarios_id);
-		
+
 		//modificamos el estatus del usuario si ya existe el registro
-		$result = $usuario ->updateUserGeneral($usuarios_id, $seudonimo, $email,$id_rol,$password); 
-		 
+		$result = $usuario ->updateUserGeneral($usuarios_id, $seudonimo, $email,$id_rol,$password);
+
 			echo json_encode ( array (
-					"result" => "OK" 
+					"result" => "OK"
 			) );
-			
-		 
-	}		
-	
+
+
+	}

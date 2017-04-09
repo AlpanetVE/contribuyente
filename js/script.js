@@ -15,7 +15,7 @@ $('#usr-log-form').formValidation({
 		},
 		addOns: { i18n: {} },
 		err: { container: 'tooltip' },
-		fields : {			
+		fields : {
 			log_usuario : {validators : {
 				notEmpty : {},
 				blank: {}}},
@@ -38,8 +38,8 @@ $('#usr-log-form').formValidation({
 			url: form.attr('action'), // la URL para la petición
            data: form.serialize() + method, // la información a enviar
             type: 'POST', // especifica si será una petición POST o GET
-            dataType: 'json', // el tipo de información que se espera de respuesta            
-            success: function (data) {            	
+            dataType: 'json', // el tipo de información que se espera de respuesta
+            success: function (data) {
             	// código a ejecutar si la petición es satisfactoria;
             	// código a ejecutar si la petición es satisfactoria;
             	// console.log(data);
@@ -51,20 +51,21 @@ $('#usr-log-form').formValidation({
 	                    // Set the field as invalid
 	                    .updateStatus(field, 'INVALID', 'blank');
 	        			setTimeout(function(){
-	        				$("#"+field).focus();	       			
+	        				$("#"+field).focus();
 	        			}, 10);
 	            	}
-	            	
+
 	            } else{
+								 alert("registro con exito");
 	            	window.location.href = "list.php";
-	            	
-                } 
+
+                }
           	},// código a ejecutar si la petición falla;
             error: function (xhr, status) {
             	alert(status);
             }
         });
-	});	
+	});
 
 
 
@@ -79,25 +80,25 @@ $("#register-submit").click(function(){
 **/
  $('#reg-inspec').formValidation({
        locale: 'es_ES',
-        framework: 'bootstrap',  
-        err: { container: 'tooltip' },   
+        framework: 'bootstrap',
+        err: { container: 'tooltip' },
         icon: { valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
-        },   
+        },
         fields: {
             razon: {
                 validators: {
                     notEmpty: {
                         message: 'No admite valor vacio'
-                    } 
+                    }
                 }
             },
             ente: {
                 validators: {
                     notEmpty: {
                         message: 'No admite valor vacio'
-                    } 
+                    }
                 }
             },
             rif: {
@@ -107,14 +108,14 @@ $("#register-submit").click(function(){
                     },
                   numeric: {
                   	message:"deben ser valores numericos"
-	                  } 
+	                  }
                 }
             },
              funcionario: {
                 validators: {
                     notEmpty: {
                         message: 'No admite valor vacio'
-                    } 
+                    }
                 }
             }
         }
@@ -133,17 +134,17 @@ $("#register-submit").click(function(){
 			url: form.attr('action'), // la URL para la petición
            data: form.serialize() + method, // la información a enviar
             type: 'POST', // especifica si será una petición POST o GET
-            dataType: 'json', // el tipo de información que se espera de respuesta            
-            success: function (data) {            	
+            dataType: 'json', // el tipo de información que se espera de respuesta
+            success: function (data) {
             	// código a ejecutar si la petición es satisfactoria;
             	// código a ejecutar si la petición es satisfactoria;
             	// console.log(data);
-	            
+
 	            if(data.result==='OK'){
-	            alert("registro con exito");	
+	            alert("registro con exito");
 	           window.location.href = "list.php";
 	            }
-	            
+
 	            if (data.result === 'error'){
 	            	for (var field in data.fields) {
 	        			fv
@@ -152,17 +153,115 @@ $("#register-submit").click(function(){
 	                    // Set the field as invalid
 	                    .updateStatus(field, 'INVALID', 'blank');
 	        			setTimeout(function(){
-	        				$("#"+field).focus();	       			
+	        				$("#"+field).focus();
 	        			}, 10);
 	            	}
-	            	
-	            } 
+
+	            }
           	},// código a ejecutar si la petición falla;
             error: function (xhr, status) {
             	alert(status);
             }
         });
-    });	
+    });
+
+		$('#reg-user').formValidation({
+					locale: 'es_ES',
+					 framework: 'bootstrap',
+					 err: { container: 'tooltip' },
+					 icon: { valid: 'glyphicon glyphicon-ok',
+							 invalid: 'glyphicon glyphicon-remove',
+							 validating: 'glyphicon glyphicon-refresh'
+					 },
+					 fields: {
+							 nombre: {
+									 validators: {
+											 notEmpty: {
+													 message: 'No admite valor vacio'
+											 }
+									 }
+							 },
+							 apellido: {
+									 validators: {
+											 notEmpty: {
+													 message: 'No admite valor vacio'
+											 }
+									 }
+							 },
+							 cedula: {
+									 validators: {
+											 notEmpty: {
+													 message: 'No admite valor vacio'
+											 },
+										 numeric: {
+											 message:"deben ser valores numericos"
+											 }
+									 }
+							 },
+								usuario: {
+									 validators: {
+											 notEmpty: {
+													 message: 'No admite valor vacio'
+											 }
+									 }
+							 },
+							 clave: {
+ 								 validators: {
+ 										 notEmpty: {
+ 												 message: 'No admite valor vacio'
+ 										 }
+ 								 }
+ 						 }
+					 }
+					 }).on('success.field.fv', function(e, data) {
+					 if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+							 data.fv.disableSubmitButtons(true);
+					 }
+			 }).on('err.form.fv', function(e,data) {
+				 $(".dropdown-toggle").dropdown('toggle');
+			 }).on('success.form.fv', function(e) {
+			 e.preventDefault();
+			 var form = $(e.target);
+			 var fv = form.data('formValidation');
+			 var method = "&method="+$(this).data("method");
+			 $.ajax({
+				 url: form.attr('action'), // la URL para la petición
+							data: form.serialize() + method, // la información a enviar
+							 type: 'POST', // especifica si será una petición POST o GET
+							 dataType: 'json', // el tipo de información que se espera de respuesta
+							 success: function (data) {
+								 // código a ejecutar si la petición es satisfactoria;
+								 // código a ejecutar si la petición es satisfactoria;
+								 // console.log(data);
+
+								 if(data.result==='OK'){
+								 alert("registro con exito");
+								window.location.href = "list.php";
+								 }
+
+								 if (data.result === 'error'){
+									 for (var field in data.fields) {
+									 fv
+												 // Show the custom message
+												 .updateMessage(field, 'blank', data.fields[field])
+												 // Set the field as invalid
+												 .updateStatus(field, 'INVALID', 'blank');
+									 setTimeout(function(){
+										 $("#"+field).focus();
+									 }, 10);
+									 }
+
+								 }
+							 },// código a ejecutar si la petición falla;
+							 error: function (xhr, status) {
+								 alert(status);
+							 }
+					 });
+			 });
+
+
+
+
 
 
 	$('#usr-act-form-nat').formValidation({
@@ -199,7 +298,7 @@ $("#register-submit").click(function(){
 				stringLength : {min: 10,max : 1024}}}
 		}
 	}).on('success.form.fv', function(e) {
-		e.preventDefault();	
+		e.preventDefault();
 		var form = $(e.target);
 		var fv = form.data('formValidation');
 		var method = "&id=" + $("#p_id").val() + "&method=act-nat";
@@ -222,10 +321,10 @@ $("#register-submit").click(function(){
 	            	}
 	            } else {
 	            	swal({
-						title: "Exito", 
+						title: "Exito",
 						text: "Se actualizo correctamente.",
 						imageUrl: "galeria/img/logos/bill-ok.png",
-						timer: 2000, 
+						timer: 2000,
 						showConfirmButton: true
 						}, function(){
 //							loadingAjax(true);
@@ -328,7 +427,7 @@ $("#register-submit").click(function(){
         });
     });
 /*Hasta aqui*/
-	
+
 	/* ============================----- Modal Registrar -----=========================*/
 	var pagina=1;
 	$('#usr-reg-form').formValidation({
@@ -344,7 +443,7 @@ $("#register-submit").click(function(){
 		fields : {
 			p_identificacion: {validators : {
 				notEmpty:{},
-				digits:{},	
+				digits:{},
 				stringLength : { max : 10 },
 				blank: {}}},
 			p_nombre : {validators : {
@@ -364,7 +463,7 @@ $("#register-submit").click(function(){
 				notEmpty : {},
 				stringLength : {min: 10,max : 1024}}},
 			e_rif: {validators : {
-				notEmpty:{},	
+				notEmpty:{},
 				digits:{},
 				stringLength : { max :  10},
 				blank: {}}},
@@ -380,7 +479,7 @@ $("#register-submit").click(function(){
 				notEmpty : {}}},
 			e_direccion : {validators : {
 				notEmpty : {},
-				stringLength : {min: 10,max : 1024}}},			
+				stringLength : {min: 10,max : 1024}}},
 			seudonimo : {validators : {
 				notEmpty : {},
 				stringLength : {max : 64},
@@ -399,19 +498,19 @@ $("#register-submit").click(function(){
 				identical: {field: 'password'}}}
 		}
 	}).on('success.form.fv', function(e) {
-		e.preventDefault();				
+		e.preventDefault();
 		var form = $(e.target);
 		var fv = form.data('formValidation');
 		var foto = "&foto="+$("#foto-usuario").attr("src");
 		var method = "&method="+$(this).data("method");
-		
+
 		$.ajax({
 			url: form.attr('action'), // la URL para la petición
             data: form.serialize() + foto + method , // la información a enviar
             type: 'POST', // especifica si será una petición POST o GET
-            dataType: 'json', // el tipo de información que se espera de respuesta		           
+            dataType: 'json', // el tipo de información que se espera de respuesta
             success: function (data) {
-            	// código a ejecutar si la petición es satisfactoria;	
+            	// código a ejecutar si la petición es satisfactoria;
             	// console.log(data);
 	            if (data.result === 'error') {
 	            	$("#usr-reg-skip").hide();
@@ -419,13 +518,13 @@ $("#register-submit").click(function(){
             		$("section").hide();
             		keys = Object.keys(data.fields);
             		if(jQuery.inArray("e_rif",keys) !== -1 || jQuery.inArray("p_identificacion",keys) !== -1){
-            			$("#usr-reg-submit").data("step",1);	
+            			$("#usr-reg-submit").data("step",1);
             			$("section[data-type='"+$("#type").val()+"']").show();
             		}else if(jQuery.inArray("seudonimo",keys) !== -1 || jQuery.inArray("email",keys)!== -1){
-            			$("#usr-reg-submit").data("step",2);	
+            			$("#usr-reg-submit").data("step",2);
             			$("section[data-step='2']").show();
             		}
-	            	for (var field in data.fields) { 
+	            	for (var field in data.fields) {
 	        			fv
 	                    // Show the custom message
 	                    .updateMessage(field, 'blank', data.fields[field])
@@ -433,56 +532,56 @@ $("#register-submit").click(function(){
 	                    .updateStatus(field, 'INVALID', 'blank');
 	            	}
 	            }else if($( "#ingresoUsuario" ).val()=="0"){ //si registramos usuarios por backend
-	            			
+
 	            				swal({
-							title: "Registro de Usuario", 
+							title: "Registro de Usuario",
 							text: "&iexcl;Usuario Creado Exitosamente!",
 							imageUrl: "galeria/img/logos/bill-ok.png",
-							timer: 2000, 
+							timer: 2000,
 							showConfirmButton: true
 							}, function(){
 								location.reload();
-							});	
-	            			
+							});
+
 	            		}else{   //si es un registro de usuario publico
 		            			swal({
-							title: "Bienvenido", 
+							title: "Bienvenido",
 							text: "&iexcl;A Vogues Eshop!",
 							imageUrl: "galeria/img/logos/bill-ok.png",
-							timer: 2000, 
+							timer: 2000,
 							showConfirmButton: true
-							}, function(){			
+							}, function(){
 								location.reload();
-							});	
-	            			
+							});
+
 	            		}
-		        						
-                            
+
+
           	},// código a ejecutar si la petición falla;
             error: function (xhr, status) {
             	SweetError(status);
             }
-        });          
-    });	
+        });
+    });
 	/* ============================----- Formulario de registro -----=========================*/
 	/*Codigo que pide al usuario seleccionar si sera personal natural o juridica*/
 	$('.alert-reg').click(function() {
 		$("section").hide();
 		$("#usr-reg-skip").hide();
 		$("#usr-reg-foto").hide();
-		$("#usr-reg-submit").data("step",1); 	
+		$("#usr-reg-submit").data("step",1);
 	});
-	
-	
+
+
 	$("#usr-reg-submit").click(function(){
-		
+
 		var step, section;
-		step = $("#usr-reg-submit").data("step"); 
+		step = $("#usr-reg-submit").data("step");
 		switch(step){
 		case 1:
 			if(validarForm(step)){
 				step++;
-				$("#usr-reg-submit").data("step",step);		
+				$("#usr-reg-submit").data("step",step);
 				$("section[data-type='"+$("#usr-reg-submit").data("type")+"']").fadeOut( "slow", function() {
 					$("#usr-reg-title").html($("section[data-step='"+step+"']").data("title"));
 					$("section[data-step='"+step+"']").fadeIn("slow");
@@ -506,27 +605,27 @@ $("#register-submit").click(function(){
 			$container = $('#usr-reg-form').find('section[data-step="' + step +'"]');
 		}
         // Validate the container
-        fv.validateContainer($container);	
+        fv.validateContainer($container);
         var isValidStep = fv.isValidContainer($container);
         if (isValidStep === false || isValidStep === null) {
             // Do not jump to the next step
             return false;
-        }        
+        }
         return true;
-	} 
-	
-
-	
-		
-	
+	}
 
 
-	
+
+
+
+
+
+
 	$(".buscador").keydown(function(e){
 		if(e.which==13){
 			if($('#txtBuscar').val()!=""){
 		        buscar=$('#txtBuscar').val();
-				window.open("listado.php?palabra=" + buscar,"_self");				
+				window.open("listado.php?palabra=" + buscar,"_self");
 			}else
 			window.open("listado.php", "_self");
 		}
@@ -538,7 +637,7 @@ $("#register-submit").click(function(){
 			}else
 			window.open("listado.php", "_self");
 	});
-	$("#usr-log-submit").prop("disabled",true);	
+	$("#usr-log-submit").prop("disabled",true);
 	$("#opcion1").click(function(){
 		if($("#opcion1").hasClass('active-cat')){
 			return false;
@@ -549,43 +648,43 @@ $("#register-submit").click(function(){
 			$("#vehiculos").css("display","none");
 			$("#servicios").css("display","none");
 			$("#inmuebles").css("display","none");
-			$("#tiendas").css("display","none");			
+			$("#tiendas").css("display","none");
 			$("#opcion1").addClass("active-cat");
 			$("#opcion2").removeClass("active-cat");
 			$("#opcion3").removeClass("active-cat");
 			$("#opcion4").removeClass("active-cat");
 			$("#opcion5").removeClass("active-cat");
 			$("#tituloCategoria").css("display","block");
-		}		
+		}
 	});
 	$("#opcion2").click(function(){
 		if($("#opcion2").hasClass('active-cat')){
 			return false;
-		}else{		
+		}else{
 			loadingAjax(true);
-		    setTimeout(pararCarga,800);		
+		    setTimeout(pararCarga,800);
 			$("#productos").css("display","none");
 			$("#vehiculos").css("display","block");
 			$("#servicios").css("display","none");
 			$("#inmuebles").css("display","none");
-			$("#tiendas").css("display","none");			
+			$("#tiendas").css("display","none");
 			$("#opcion1").removeClass("active-cat");
 			$("#opcion2").addClass("active-cat");
 			$("#opcion3").removeClass("active-cat");
 			$("#opcion4").removeClass("active-cat");
 			$("#opcion5").removeClass("active-cat");
 			$("#tituloCategoria").css("display","block");
-		}		
+		}
 	});
 	$("#opcion3").click(function(){
 		if($("#opcion3").hasClass('active-cat')){
 			return false;
-		}else{		
+		}else{
 			loadingAjax(true);
-		    setTimeout(pararCarga,800);		
+		    setTimeout(pararCarga,800);
 			$("#productos").css("display","none");
 			$("#vehiculos").css("display","none");
-			$("#inmuebles").css("display","block");		
+			$("#inmuebles").css("display","block");
 			$("#servicios").css("display","none");
 			$("#tiendas").css("display","none");
 			$("#opcion1").removeClass("active-cat");
@@ -593,18 +692,18 @@ $("#register-submit").click(function(){
 			$("#opcion3").addClass("active-cat");
 			$("#opcion4").removeClass("active-cat");
 			$("#opcion5").removeClass("active-cat");
-			$("#tituloCategoria").css("display","block");			
-		}		
+			$("#tituloCategoria").css("display","block");
+		}
 	});
 	$("#opcion4").click(function(){
 		if($("#opcion4").hasClass('active-cat')){
 			return false;
-		}else{		
+		}else{
 			loadingAjax(true);
-		    setTimeout(pararCarga,800);		
+		    setTimeout(pararCarga,800);
 			$("#productos").css("display","none");
 			$("#vehiculos").css("display","none");
-			$("#inmuebles").css("display","none");		
+			$("#inmuebles").css("display","none");
 			$("#servicios").css("display","block");
 			$("#tiendas").css("display","none");
 			$("#opcion1").removeClass("active-cat");
@@ -612,18 +711,18 @@ $("#register-submit").click(function(){
 			$("#opcion3").removeClass("active-cat");
 			$("#opcion5").removeClass("active-cat");
 			$("#opcion4").addClass("active-cat");
-			$("#tituloCategoria").css("display","block");			
-		}		
+			$("#tituloCategoria").css("display","block");
+		}
 	});
 	$("#opcion5").click(function(){
 		if($("#opcion5").hasClass('active-cat')){
 			return false;
-		}else{		
+		}else{
 			loadingAjax(true);
-		    setTimeout(pararCarga,800);		
+		    setTimeout(pararCarga,800);
 			$("#productos").css("display","none");
 			$("#vehiculos").css("display","none");
-			$("#inmuebles").css("display","none");		
+			$("#inmuebles").css("display","none");
 			$("#servicios").css("display","none");
 			$("#tiendas").css("display","block");
 			$("#opcion1").removeClass("active-cat");
@@ -631,21 +730,21 @@ $("#register-submit").click(function(){
 			$("#opcion3").removeClass("active-cat");
 			$("#opcion4").removeClass("active-cat");
 			$("#opcion5").addClass("active-cat");
-			$("#tituloCategoria").css("display","none");			
-		}		
-	});	
+			$("#tituloCategoria").css("display","none");
+		}
+	});
 	$(".publicaciones1,.publicaciones2").click(function(e){
 		window.open("detalle.php?id=" + $(this).attr("id"),"_self");
 	});
 	$(".vendedores").click(function(e){
 		window.open("perfil.php?id=" + $(this).attr("id"),"_self");
-	});	
+	});
 	function pararCarga(){
 		loadingAjax();
 	}
-	
-	
- 
+
+
+
 /*	$(".izquierda").click(function(){
 		var elDiv=$("#listaPublicaciones");
 		var laPagina=elDiv.data("pagina");
@@ -662,8 +761,8 @@ $("#register-submit").click(function(){
 			}
 		});
 	});*/
-	
-	
+
+
 // Tooltip ------------------------------------
   $('[data-toggle="tooltip"]').tooltip();
 //---------------------------------------------
@@ -689,7 +788,7 @@ $("#register-submit").click(function(){
 			}
 		});
 	}
-	
+
 	$("#enviar-email").formValidation({
 		locale: 'es_ES',
 		excluded: ':disabled',
@@ -701,26 +800,26 @@ $("#register-submit").click(function(){
 		},
 		addOns: { i18n: {} },
 		err: { container: 'tooltip' },
-		fields : {			
+		fields : {
 			nombre : {validators : {
 				notEmpty : {},
 				stringLength : {max : 512},
 				regexp: {regexp: /^[\u00F1a-z\s]+$/i}}},
 			email : {validators : {
 				notEmpty : {},
-				emailAddress : {}}},			
+				emailAddress : {}}},
 			mensaje : {validators : {
-				notEmpty:{}}				
+				notEmpty:{}}
 			}
 		}
-	}).on('success.field.fv', function(e) {		
+	}).on('success.field.fv', function(e) {
 		e.preventDefault();
 		email=$("#email").val();
 		nombre=$("#nombre").val();
 		mensaje=$("#mensaje").val();
 		method="send-email";
 
-	});	
+	});
 $("#enviar").click(function(e){
 		e.preventDefault();
 		email=$("#email").val();
@@ -741,20 +840,20 @@ $("#enviar").click(function(e){
 			}
 		});
 			swal({
-						title: "Exito", 
+						title: "Exito",
 						text: "Tu mensaje ha sido enviado.",
 						imageUrl: "galeria/img/logos/bill-ok.png",
-						timer: 2000, 
+						timer: 2000,
 						showConfirmButton: true
 				});
-		
+
 	});
 	$(document).on('keyup',"#txtBusqueda",function(e){
 		if($(this).val()!=""){
 			var c=0;
-			var valor=$(this).val().toUpperCase();			
+			var valor=$(this).val().toUpperCase();
 			$(".general").each(function(i){
-				var titulo=$(this).data("titulo").toUpperCase();				
+				var titulo=$(this).data("titulo").toUpperCase();
 				if(titulo.indexOf(valor)==-1) {
 					$(this).css("display","none");
 				}else{
@@ -767,20 +866,20 @@ $("#enviar").click(function(e){
 				$("#publicaciones").addClass("hidden");
 			}else{
 				$("#noresultados").addClass("hidden");
-				$("#publicaciones").removeClass("hidden");				
+				$("#publicaciones").removeClass("hidden");
 			}
-		}else{		
+		}else{
 			if($(".general").length>0){
 				$("#noresultados").addClass("hidden");
 				$("#publicaciones").removeClass("hidden");
-				$(".general").css("display","block");				
+				$(".general").css("display","block");
 			}else{
 				$("#noresultados").removeClass("hidden");
-				$("#publicaciones").addClass("hidden");				
+				$("#publicaciones").addClass("hidden");
 			}
 		}
-	});	
-	//$('.modal-conf').on('show.bs.modal', function (e) {	
+	});
+	//$('.modal-conf').on('show.bs.modal', function (e) {
 	$("#btnEmpresa").click(function(e){
 		e.preventDefault();
 		$.ajax({
@@ -826,14 +925,14 @@ $("#enviar").click(function(e){
 			}
 		});
 	});
-	
+
 	$("#btnPersona2").click(function(e){
 		/*$("#btn_sin_cuenta").data("tipo","1");
 		$("#tw_reg_button").data("tipo","1");
 	    $("#actualizar2").data("tipo","1");*/
-	   
+
 		$("#actualizar2").modal('hide');
-		
+
 		$("#usr-reg-title").html($("section[data-type='p']").data("title"));
 			$("#usr-reg-submit").data("type","p");
 			$("section[data-type='p']").fadeIn();
@@ -848,8 +947,8 @@ $("#enviar").click(function(e){
 			$("#usr-reg-submit").data("type","e");
 			$("section[data-type='e']").fadeIn();
 			$("#type").val("e");
-		
-	});		
+
+	});
 	$("#info-personal").on("hidden.bs.modal",function(){
 		$("#actualizar").modal('show');
 	});
@@ -860,8 +959,8 @@ $("#enviar").click(function(e){
 		if ($('#usr-reg').is(':hidden')){
 			$("#actualizar2").modal('show');
 		}
-	});	
-	
+	});
+
 	$("#btn_sin_cuenta").click(function(){
 		if ($(this).data("tipo")==1) {
 			$("#usr-reg-title").html($("section[data-type='p']").data("title"));
@@ -873,10 +972,10 @@ $("#enviar").click(function(e){
 			$("#usr-reg-submit").data("type","e");
 			$("section[data-type='e']").fadeIn();
 			$("#type").val("e");
-		}		
+		}
 		$("#insc-red").modal('hide');
 	});
-	
+
 	$(".btn_sin_cuenta").click(function(){
 		if ($(this).data("tipo")==1) {
 			$("#usr-reg-title").html($("section[data-type='p']").data("title"));
@@ -888,20 +987,20 @@ $("#enviar").click(function(e){
 			$("#usr-reg-submit").data("type","e");
 			$("section[data-type='e']").fadeIn();
 			$("#type").val("e");
-		}		
+		}
 		$("#insc-red").modal('hide');
 	});
 	$("#notificacion").click(function(){
 		var id = $(this).data("id");
 		$("#alerta").hide();
-		$.ajax({									
+		$.ajax({
 			url: "fcn/f_usuarios.php",
 			data: {method:"upd-Noti",id:id},
 			type: "POST",
 			dataType: "html",
 			success:function(data){
-				
-					
+
+
 			}
 		});
 	});

@@ -13,11 +13,14 @@ class usuario {
 	//Usuarios (u)
 	protected $u_table = "usuarios";
 	private $id = 0;
-	private $u_clave;
-	private $u_creado;
 	private $u_nombre;
+	private $u_apellido;
+	private $u_cedula;
 	private $u_seudonimo;
+	private $u_clave;
+	private $u_cargo;
 	private $u_status;
+	private $u_creado = 'now()';
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * *
@@ -45,6 +48,13 @@ class usuario {
 			return false;
 		}
 	}
+
+public function crear(){
+	$bd = new bd ();
+	$result = $bd->doInsert ( $this->u_table, $this->serializarDatos ( "u_" ) );
+	return $result;
+}
+
 	public function crearUsuario() {
 		if (isset ( $this->n_identificacion ) xor isset ( $this->j_rif )) {
 			if (isset ( $this->a_seudonimo )) {
@@ -445,6 +455,19 @@ function comprobarToken($token){
 		$this->a_id_rol = $id_rol;
 		$this->a_status_usuarios_id = $status_usuarios_id;
 	}
+
+	public function setDatos($nombre,$apellido,$cedula,$usuario,$clave,$cargo){
+		$this->u_nombre = $nombre;
+		$this->u_apellido = $apellido;
+		$this->u_cedula = $cedula;
+		$this->u_seudonimo = $usuario;
+		$this->u_clave = hash ( "sha256", $clave );
+		$this->u_cargo = $cargo;
+		$this->u_status = 1;
+
+	}
+
+
 	public function datosStatus($fecha = NULL, $status_usuarios_id = NULL) {
 
 		if(!is_null($fecha)){
