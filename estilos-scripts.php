@@ -1,5 +1,5 @@
 <head>
-<title>Sunagro</title>
+<title>Sistema Contribuyentes</title>
 <!--<link rel="shortcut icon" href="favicon.ico"> -->
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
