@@ -12,7 +12,7 @@
 class bd extends PDO {
 	private $driver = "mysql";
 	private $host = "localhost";
-	private $bd_name = "sunagro";
+	private $bd_name = "contribuyente";
 	private $bd_charset = "utf8";
 	private $user = "root";
 	private $password = "";

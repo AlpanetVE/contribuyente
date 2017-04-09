@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
-<?php ?>
+<?php
+header("Location: login.php");
+
+ ?>
 
 </html>
