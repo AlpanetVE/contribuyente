@@ -60,6 +60,9 @@ switch ($_POST["method"]) {
 	case "restablecer":
 		restablecerPassword();
 		break;
+case "searchfilter":
+	resbusqueda();
+	break;
 	default :
 		echo "error";
 		break;
@@ -86,6 +89,63 @@ function getUser() {
 			"campos" => $valores
 	) );
 }
+
+//Busqueda de usuarios
+
+function resbusqueda(){
+
+	//$rif_busq=filter_input(INPUT_POST,"buscar_rif");
+
+	$condicion="status=1 ";
+
+
+
+	if(isset($_POST['buscar_cedula']) && $_POST['buscar_cedula']!="")
+		{
+			$cedula_busq=filter_input(INPUT_POST,"buscar_cedula");
+		   $condicion.= "AND cedula LIKE '%$cedula_busq%'";
+
+		}
+     $sql = new bd();
+
+	 $res=$sql->doFullSelect("usuarios",$condicion);
+	 if(!empty($res)){
+
+		 ?>
+		 <?php
+		 echo $condicion;
+		foreach ($res as $fila) {
+                ?>
+                <tr>
+									<td><?php echo $fila["seudonimo"]; ?></td>
+									<td><?php echo $fila["cedula"]; ?></td>
+									<td><?php echo $fila["nombre"]; ?></td>
+									<td><?php echo $fila["apellido"]; ?></td>
+									<td><?php echo $fila["cargo"]; ?></td>
+
+                       <!-- <td><a href="#mod" class="update_user show-select-rol" data-toggle="modal" data-target="#usr-update-info" data-rol-type="select" data-tipo="1" data-method="actualizar" data-usuarios_id="<?php echo $fila['id']; ?>"  ><i class="fa fa-lock" ></i> Modificar</a></td>
+                        <td><a href="#del" class="select-usr-delete " data-toggle="modal" data-target='#msj-eliminar' data-status='3'  data-usuarios_id="<?php echo $fila['id']; ?>"   >
+                        		<i class="fa fa-remove"></i> Eliminar
+                        	</a>
+                       </td> -->
+
+                </tr>
+                <?php
+            }
+            ?>
+
+	 <?php
+
+
+	 }
+	 else{
+	 	?> <p> Vacio</p>
+	  <?php }
+
+}
+
+
+
 function actPass(){
 	session_start();
 	$usuario = new usuario($_SESSION["id"]);

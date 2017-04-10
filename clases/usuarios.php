@@ -822,4 +822,23 @@ function comprobarToken($token){
 		return $result;
 	}
 
+	public function listarUsuarios(){
+		$sql=new bd();
+		$condicion='status=1';
+		$result=$sql->doFullSelect($this->u_table, $condicion);
+		if(!empty ($result))
+			return $result;
+		else
+			return false;
+	}
+
+	public function getUsers($campos){
+		$sql=new bd();
+		$consulta="select $campos FROM usuarios WHERE status=1 ";
+
+		//echo $consulta;
+    $result=$sql->query($consulta);
+		return $result;
+	}
+
 }

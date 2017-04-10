@@ -9,7 +9,7 @@
 					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"></i> Usuarios <span class="caret"></span></a>
 					        <ul class="dropdown-menu">
 					          <li><a href="createuser.php"><i class="fa fa-user-plus"></i> Agregar</a></li>
-					          <li><a href="#">Page 1-2</a></li>
+					          <li><a href="searchuser.php"><i class="fa fa-search"></i> Buscar</a></li>
 					          <li><a href="#">Page 1-3</a></li>
 					        </ul>
 					      </li>
