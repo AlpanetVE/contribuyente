@@ -346,12 +346,12 @@ function newUser(){
 		$passwd=filter_input(INPUT_POST,"clave");
 		$cargo=filter_input(INPUT_POST,"cargo");
 
-	 if ($bd->valueExist( $usuario->u_table, $usuario, "seudonimo")) {
-	  	$fields ["usuario"] = "El usuario no esta disponible";
-	  }
-	//  if ($bd->valueExist($usuario->u_table, $cedula, "cedula")) {
-	//  	$fields ["cedula"] = "Cedula ya registrada";
-	//  }
+ if ($bd->valueExist( $user->u_table, $usuario, "seudonimo")) {
+	 	$fields ["usuario"] = "El usuario no esta disponible";
+  }
+	 if ($bd->valueExist($user->u_table, $cedula, "cedula")) {
+	 	$fields ["cedula"] = "Cedula ya registrada";
+	 }
 		if (isset ( $fields )) {
 			echo json_encode ( array (
 					"result" => "error",

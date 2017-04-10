@@ -25,13 +25,14 @@
         <div class="col-lg-6">
         <label> Cédula </label>	<input type="text" name="cedula" id="cedula" class="form-control" />
         </div>
+				<div class="col-lg-6" >
+		   			<label> Usuario </label> <input type="text" name="usuario" id="usuario"  class="form-control" />
+		     </div>
 		</div>
 
 <div class="row text-center">
 
-		   	<div class="col-lg-6" >
-		   			<label> Usuario </label> <input type="text" name="usuario" id="usuario"  class="form-control" />
-		     </div>
+
 		    <div class="col-lg-6">
 		      		<label> Clave </label> <input type="password" name="clave" id="clave" class="form-control" />
 			</div>
