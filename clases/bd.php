@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * @property string driver tipo de conexion
  * @property string host nombre del host
  * @property string bd_name nombre de la base de datos
@@ -20,7 +20,7 @@ class bd extends PDO {
 			PDO::ATTR_EMULATE_PREPARES => true,
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 			PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC 
+			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 	);
 	private $rowcount;
 	public function bd() {
@@ -35,7 +35,7 @@ class bd extends PDO {
 		try {
 			$sql = $this->prepare ( $stament );
 			$sql->execute ( array (
-					$search 
+					$search
 			) );
 			$count = $sql->rowCount ();
 			if ($count > 0) {
@@ -47,8 +47,8 @@ class bd extends PDO {
 			return $this->showError ( $ex );
 		}
 	}
-	
-	
+
+
 	public function doFullSelect($table, $condition = NULL, $columns = "*") {
 		if (isset ( $condition )) {
 			$condition = "WHERE $condition";
@@ -91,12 +91,12 @@ class bd extends PDO {
 			$stament = "INSERT INTO {$table}({$vars['columns']}) VALUES ({$vars['values']})";
 		//	die($stament);
 			try {
-				
+
 				$sql = $this->prepare ( $stament );
 				foreach ( $vars ['valuesp'] as $key => $value ) {
 					$sql->bindValue ( $key, $value );
 				}
-				
+
 				return $sql->execute ();
 			} catch ( PDOException $ex ) {
 				return $this->showError ( $ex );

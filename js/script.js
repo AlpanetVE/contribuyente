@@ -234,7 +234,7 @@ $("#register-submit").click(function(){
 								 // código a ejecutar si la petición es satisfactoria;
 								 // console.log(data);
 
-								 if(data.result==='OK'){
+								 if(data.result=='ok'){
 								 alert("registro con exito");
 								window.location.href = "list.php";
 								 }

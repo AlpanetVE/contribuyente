@@ -12,7 +12,7 @@ class usuario {
 	 * * * * * * * * * * * * * * * * * * * * * * */
 	//Usuarios (u)
 	protected $u_table = "usuarios";
-	private $id = 0;
+	private $idusuarios = 0;
 	private $u_nombre;
 	private $u_apellido;
 	private $u_cedula;
