@@ -57,6 +57,9 @@ switch ($_POST["method"]) {
 	case "update_user":
 		updateUser();
 		break;
+	case "deleteUser":
+		deleteUser();
+		break;
 	case "restablecer":
 		restablecerPassword();
 		break;
@@ -139,7 +142,22 @@ function resbusqueda(){
 
 }
 
-
+function deleteUser(){
+		$sql= new bd();
+	$usuarios_id=filter_input ( INPUT_POST, "usuarios_id" );
+	$consulta="DELETE FROM usuarios where idusuarios=$usuarios_id";
+	 $res=$sql->query($consulta);
+	 if($res){
+	 	echo json_encode ( array (
+					"result" => "OK"
+			) );
+	 }
+	 else{
+	 	echo json_encode ( array (
+					"result" => "error"
+			) );
+	 }
+}
 
 function actPass(){
 	session_start();

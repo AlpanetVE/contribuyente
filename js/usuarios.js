@@ -181,9 +181,11 @@ $('#usr-update-form').formValidation({
             dataType: 'json', // el tipo de información que se espera de respuesta
             success: function (data) {
             	if (data.result === 'error'){
-	            	SweetError("Borrar Usuario");
+								alert('error');
+							//	SweetError("Borrar Usuario");
 	            	$('#msj-eliminar').modal('hide');
 	            }else{
+								alert('Eliminado');
 	            	location.reload();
                 }
 

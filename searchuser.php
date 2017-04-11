@@ -5,8 +5,10 @@
 	?>
  	<body class="">
  <div >
-<?php include "paginas/searchuser/p_searchuser.php"; ?>
-<?php include "modales/m_edit_user.php"; ?>
+<?php include "paginas/searchuser/p_searchuser.php";
+      include "modales/m_edit_user.php";
+      include "modales/m_delete_user.php"; 
+      ?>
 </div>
   </body>
 </html>
