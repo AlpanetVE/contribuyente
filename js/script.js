@@ -56,7 +56,7 @@ $('#usr-log-form').formValidation({
 	            	}
 
 	            } else{
-								 alert("registro con exito");
+								 //alert("registro con exito");
 	            	window.location.href = "list.php";
 
                 }
@@ -141,7 +141,7 @@ $("#register-submit").click(function(){
             	// console.log(data);
 
 	            if(data.result==='OK'){
-	            alert("registro con exito");
+	            //alert("registro con exito");
 	           window.location.href = "list.php";
 	            }
 
@@ -235,7 +235,7 @@ $("#register-submit").click(function(){
 								 // console.log(data);
 
 								 if(data.result=='ok'){
-								 alert("registro con exito");
+								 //alert("registro con exito");
 								window.location.href = "list.php";
 								 }
 
@@ -258,9 +258,122 @@ $("#register-submit").click(function(){
 							 }
 					 });
 			 });
+ 	
+ 	$(document).on('change',".doAjax",function(e){
+		var method 	= 'method='+$(this).data('method');
+		var func 	= 'function/'+$(this).data('func');
+		var val 	= '&val='+$(this).val();
+		
+	    $.ajax({
+			url: func,
+			data: method + val,
+			type: 'POST', // especifica si será una petición POST o GET
+			dataType: 'json', // el tipo de información que se espera de respuesta
+			success: function (data) {
 
+				if(data.result=='ok'){
+					 $(data.inputRemove).remove();					
+				    $.each(data.campos, function(){
+				        $(data.input).append('<option value="'+ this.value +'">'+ this.name +'</option>')
+				    })
+				}
+			},// código a ejecutar si la petición falla;
+			error: function (xhr, status) {
+				alert(status);
+			}
+		});
+	});	 
+		
+			 
+	$('#reg-contribuyente').formValidation({
+		locale: 'es_ES',
+		 framework: 'bootstrap',
+		 err: { container: 'tooltip' },
+		 icon: { valid: 'glyphicon glyphicon-ok',
+				 invalid: 'glyphicon glyphicon-remove',
+				 validating: 'glyphicon glyphicon-refresh'
+		 },
+		 fields: {
+				 razon_social: {
+						 validators: {
+								 notEmpty: {
+										 message: 'No admite valor vacio'
+								 }
+						 }
+				 },
+				 rif: {
+						 validators: {
+								 notEmpty: {
+										 message: 'No admite valor vacio'
+								 }
+						 }
+				 },
+				 parroquia: {
+						 validators: {
+								 notEmpty: {
+										 message: 'No admite valor vacio'
+								 }
+						 }
+				 },
+				 telefono: {
+						 validators: {
+								 notEmpty: {
+										 message: 'No admite valor vacio'
+								 }
+						 }
+				 },
+				 correo: {
+						 validators: {
+								 notEmpty: {
+										 message: 'No admite valor vacio'
+								 }
+						 }
+				 },
+				 cierre_fiscal: {
+						 validators: {
+								 notEmpty: {
+										 message: 'No admite valor vacio'
+								 }
+						 }
+				 }
+		 }
+		 }).on('success.field.fv', function(e, data) {
+		 if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+				 data.fv.disableSubmitButtons(true);
+		 }
+	}).on('err.form.fv', function(e,data) {
+	 $(".dropdown-toggle").dropdown('toggle');
+	}).on('success.form.fv', function(e) {
 
+		e.preventDefault();
+		var form 	= $(e.target);
+		var fv 		= form.data('formValidation');
+		var method 	= "&method="+$(this).data("method");
+		$.ajax({
+			url: form.attr('action'), // la URL para la petición
+			data: form.serialize() + method, // la información a enviar
+			type: 'POST', // especifica si será una petición POST o GET
+			dataType: 'json', // el tipo de información que se espera de respuesta
+			success: function (data) {
+				if(data.result=='ok'){
+					//alert("registro con exito");
+					window.location.href = "?view=list";
+				}
 
+				if (data.result === 'error'){
+					for (var field in data.fields) {
+						fv.updateMessage(field, 'blank', data.fields[field]).updateStatus(field, 'INVALID', 'blank');
+						setTimeout(function(){
+							$("#"+field).focus();
+						}, 10);
+					}
+				}
+			},// código a ejecutar si la petición falla;
+			error: function (xhr, status) {
+			alert(status);
+			}
+		});
+	});
 
 
 
