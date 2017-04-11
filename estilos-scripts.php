@@ -27,6 +27,7 @@
 <script type="text/javascript" src="js/language/es_ES.js"></script>
 <!--<script type="text/javascript" src="js/sweetalert.min.js"></script> -->
 <script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/usuarios.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/preguntas.js"></script>
 <script type="text/javascript" src="js/busqueda.js"></script>

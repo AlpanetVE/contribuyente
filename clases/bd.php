@@ -48,6 +48,23 @@ class bd extends PDO {
 		}
 	}
 
+	public function valueExistUpdate($table, $search, $column,$condition) {
+		$stament = "SELECT * FROM {$table} WHERE {$column} = ? AND {$condition}";
+		try {
+			$sql = $this->prepare ( $stament );
+			$sql->execute ( array (
+					$search
+			) );
+			$count = $sql->rowCount ();
+			if ($count > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch ( PDOException $ex ) {
+			return $this->showError ( $ex );
+		}
+	}
 
 	public function doFullSelect($table, $condition = NULL, $columns = "*") {
 		if (isset ( $condition )) {
