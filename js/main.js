@@ -57,6 +57,10 @@ function SweetError(text){
 		showConfirmButton: true
 		});
 }
+
+function goBack() {
+    window.history.back();
+}
 function loadingAjax(status){
 	if(status){
 		//$('<div class="modal-backdrop fade in cargador" style="display:none"></div>').appendTo(document.body);
