@@ -20,6 +20,7 @@ class usuario {
 	private $u_clave;
 	private $u_cargo;
 	private $u_status;
+	private $u_rol;
 	private $u_creado = 'now()';
 
 
@@ -209,6 +210,7 @@ public function crear(){
 					$_SESSION["seudonimo"] = $result["seudonimo"];
 					$_SESSION["nombre"] = $result["nombre"];
 					$_SESSION["status"] = $result["status"];
+					$_SESSION["rol"] = $result["rol"];
 					$_SESSION["autentica"]="1";
 					setcookie("c_id", $result["idusuarios"], 0,'/');
 					setcookie("c_seudonimo", $result["seudonimo"], 0,'/');
@@ -451,13 +453,14 @@ function comprobarToken($token){
 		$this->a_status_usuarios_id = $status_usuarios_id;
 	}
 
-	public function setDatos($nombre,$apellido,$cedula,$usuario,$clave,$cargo){
+	public function setDatos($nombre,$apellido,$cedula,$usuario,$clave,$cargo,$rol){
 		$this->u_nombre = $nombre;
 		$this->u_apellido = $apellido;
 		$this->u_cedula = $cedula;
 		$this->u_seudonimo = $usuario;
 		$this->u_clave = hash ( "sha256", $clave );
 		$this->u_cargo = $cargo;
+		$this->u_rol = $rol;
 		$this->u_status = 1;
 
 	}

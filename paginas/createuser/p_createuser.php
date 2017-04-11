@@ -39,6 +39,13 @@
       <div class="col-lg-6">
             <label> Cargo </label> <input type="text" name="cargo" id="cargo" class="form-control" />
     </div>
+		<div class="col-lg-6">
+					<label> Rol </label>
+					<select class="select-single form-select" id="rol" name="rol">
+						<option value="1">Administrador</option>
+						<option value="2">Usuario</option>
+					</select>
+		</div>
 	</div>
 
 <div class="row text-center" style="margin-top: 20px;">
