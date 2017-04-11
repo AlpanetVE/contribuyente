@@ -37,13 +37,8 @@ class usuario {
 	 * * * * * * * * * * * * * * * * * * * * */
 	public function buscarUsuario($id) {
 		// hace consulta y setea valores
-		$this->id = $id;
-		if(!$this->getdatosUsuarios()){
-			if(!$this->getdatosNatural()){
-				$this->getdatosJuridico();
-			}
-			$this->getdatosAcceso();
-			$this->getdatosStatus();
+		$this->idusuarios = $id;
+		if(!$this->getdatosUsuario()){
 		}else{
 			return false;
 		}
@@ -362,12 +357,12 @@ function comprobarToken($token){
 	/* * * * * * * * * * * * * * * * * * *
 	 * =========--- Getters ---========= *
 	 * * * * * * * * * * * * * * * * * * */
-	public function getdatosUsuarios(){
+	public function getdatosUsuario(){
 		$bd = new bd();
-		$result = $bd->doSingleSelect($this->u_table,"id = {$this->id}");
+		$result = $bd->doSingleSelect($this->u_table,"idusuarios = {$this->idusuarios}");
 		if($result){
-			$this->datosUsuario($result["direccion"], $result["telefono"], $result["descripcion"], $result["estados_id"], $result["facebook"], $result["twitter"],$result["website"]);
-			$this->id = $result["id"];
+			$this->setDatos($result["nombre"], $result["apellido"], $result["cedula"], $result["seudonimo"], $result["clave"], $result["cargo"]);
+			$this->idusuarios = $result["idusuarios"];
 		}else {
 			return false;
 		}
@@ -810,6 +805,19 @@ function comprobarToken($token){
 		$condicion="usuarios_id=$usuarios_id";
 		$result=$bd->doUpdate($this->a_table,$actualizar,$condicion);
 		return $result;
+	}
+
+	public function updateUser($usuarios_id, $seudonimo=NULL, $nombre=NULL,$apellido=NULL,$cedula=NULL,$cargo=NULL,$password=NULL){
+				$bd=new bd();
+				$actualizar=array( 'seudonimo'=>$seudonimo,'nombre'=>$nombre,'apellido'=>$apellido,'cedula'=>$cedula,'cargo'=>$cargo);
+				//si cambiaron la contrase�a
+				if(!empty($password)){
+					$password = hash ( "sha256", $password );
+					$actualizar['clave']=$password;
+				}
+				$condicion="idusuarios=$usuarios_id";
+				$result=$bd->doUpdate($this->u_table,$actualizar,$condicion);
+				return $result;
 	}
 
 	public function setNewPassword($user,$clave){

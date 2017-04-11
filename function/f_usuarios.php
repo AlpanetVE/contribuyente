@@ -68,19 +68,14 @@ case "searchfilter":
 		break;
 }
 function getUser() {
-	if(!isset($_POST["id"])){
-		if(!isset($_SESSION)){
-			session_start();
-		}
-		$usuario = new usuario ( $_SESSION ["id"] );
-	}else{
 		$usuario = new usuario ( $_POST ["id"] );
-	}
+
 	$reflection = new ReflectionObject ( $usuario );
 	$properties = $reflection->getProperties ( ReflectionProperty::IS_PRIVATE );
 	foreach ( $properties as $property ) {
 		$name = $property->getName ();
-		if($name!="a_password" || !isset($_POST["id"])){
+		//echo $usuario->$name;
+		if($name!="u_clave" || !isset($_POST["id"])){
 			$valores [$name] = $usuario->$name;
 		}
 	}
@@ -650,21 +645,41 @@ function restablecerPassword(){
  }
 	function updateUser(){
 		$usuarios_id=	filter_input ( INPUT_POST, "update_usuarios_id" );
-		$seudonimo=		filter_input ( INPUT_POST, "update_seudonimo" );
-		$email	=		filter_input ( INPUT_POST, "update_email" );
-		$id_rol=		filter_input ( INPUT_POST, "update_id_rol_select" );
-
+		$seudonimo = filter_input ( INPUT_POST, "update_seudonimo" );
+		$nombre = filter_input ( INPUT_POST, "update_nombre" );
+		$apellido = filter_input ( INPUT_POST, "update_apellido" );
+		$cedula = filter_input ( INPUT_POST, "update_cedula" );
+		$cargo = filter_input ( INPUT_POST, "update_cargo" );
 		$password= 		filter_input ( INPUT_POST, "update_password" );
 
+		$bd = new bd();
+		$user = new usuario($usuarios_id);
 
-		$usuario = new usuario($usuarios_id);
-
+		if ($bd->valueExistUpdate( $user->u_table, $seudonimo, "seudonimo","idusuarios<>$usuarios_id")) {
+			 $fields ["update_seudonimo"] = "El usuario no esta disponible";
+		 }
+			if ($bd->valueExistUpdate($user->u_table, $cedula, "cedula","idusuarios<>$usuarios_id")) {
+			 $fields ["update_cedula"] = "Cedula ya registrada";
+			}
+			 if (isset ( $fields )) {
+				 echo json_encode ( array (
+						 "result" => "error",
+						 "fields" => $fields
+				 ) );
+				 exit ();
+			 }
 		//modificamos el estatus del usuario si ya existe el registro
-		$result = $usuario ->updateUserGeneral($usuarios_id, $seudonimo, $email,$id_rol,$password);
-
-			echo json_encode ( array (
-					"result" => "OK"
-			) );
+		$result = $user ->updateUser($usuarios_id, $seudonimo, $nombre,$apellido,$cedula,$cargo,$password);
+if($result){
+	echo json_encode ( array (
+			"result" => "OK"
+	) );
+  }
+else{
+	echo json_encode ( array (
+			"result" => "error"
+	) );
+}
 
 
 	}

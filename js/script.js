@@ -205,6 +205,13 @@ $("#register-submit").click(function(){
 											 }
 									 }
 							 },
+							 cargo: {
+ 								 validators: {
+ 										 notEmpty: {
+ 												 message: 'No admite valor vacio'
+ 										 }
+ 								 }
+ 						 },
 							 clave: {
  								 validators: {
  										 notEmpty: {
