@@ -13,6 +13,12 @@ switch ($_POST["method"]) {
 	case "getParroquias" :
 		getParroquias();
 		break;
+	case 'deleteContribuyente':
+		deleteContribuyente();
+		break;
+	case "searchfilter":
+		resbusqueda();
+		break;
 	default :
 		echo "error";
 		break;
@@ -78,16 +84,17 @@ function getParroquias() {
 }
 
 function registrar() {
-	$razon_social	= filter_input(INPUT_POST,"razon_social");
-	$rif			= filter_input(INPUT_POST,"rif");
-	$domicilio		= filter_input(INPUT_POST,"domicilio");
-	$parroquia_id	= filter_input(INPUT_POST,"parroquia");
-	$telefono		= filter_input(INPUT_POST,"telefono");
-	$fax			= filter_input(INPUT_POST,"fax");
-	$correo			= filter_input(INPUT_POST,"correo");
-	$cierre_fiscal	= filter_input(INPUT_POST,"cierre_fiscal");
-	$actividad		= filter_input(INPUT_POST,"actividad");
+	$contribuyente 	= new contribuyente();
 
+	$razon_social		= filter_input(INPUT_POST,"razon_social");
+	$rif				= filter_input(INPUT_POST,"rif");
+	$domicilio			= filter_input(INPUT_POST,"domicilio");
+	$parroquia_id		= filter_input(INPUT_POST,"parroquia");
+	$telefono			= filter_input(INPUT_POST,"telefono");
+	$fax				= filter_input(INPUT_POST,"fax");
+	$correo				= filter_input(INPUT_POST,"correo");
+	$cierre_fiscal		= filter_input(INPUT_POST,"cierre_fiscal");
+	$actividad			= filter_input(INPUT_POST,"actividad");
 
 	$nombre				= filter_input(INPUT_POST,"nombre");
 	$apellido			= filter_input(INPUT_POST,"apellido");
@@ -96,12 +103,27 @@ function registrar() {
 	$telefono			= filter_input(INPUT_POST,"telefono_representante");
 
 	
+	$contribuyente_id	= filter_input(INPUT_POST,"contribuyente_id");
 
-	$contribuyente = new contribuyente();
-	
-	$contribuyente_id=$contribuyente->registrarContribuyente($razon_social,$rif,$domicilio,$parroquia_id,$telefono,$fax,$correo,$cierre_fiscal,$actividad);
+	if (empty($contribuyente_id)) {
+		$contribuyente_id=$contribuyente->registrarContribuyente($razon_social,$rif,$domicilio,$parroquia_id,$telefono,$fax,$correo,$cierre_fiscal,$actividad);
 
-	$result=$contribuyente->registrarRepresentante($contribuyente_id,$nombre,$apellido,$rif,$correo,$telefono);
+		$result=$contribuyente->registrarRepresentante($contribuyente_id,$nombre,$apellido,$rif,$correo,$telefono);
+	}	
+	else{
+
+
+		$data 	= array( 'razon_social' => $razon_social,'rif' => $rif,'domicilio' => $domicilio,'parroquia_id' => $parroquia_id,'telefono' => $telefono,'fax' => $fax,'correo' => $correo,'cierre_fiscal' => $cierre_fiscal,'actividad' => $actividad);
+
+		$dataRp	= array( 'nombre' => $nombre,'apellido' => $apellido,'rif' => $rif,'correo' => $correo,'telefono' => $telefono);
+
+
+		$result=$contribuyente->actualizarContribuyente($contribuyente_id, $data);
+
+		$result=$contribuyente->actualizarRepresentante($contribuyente_id, $dataRp);
+
+	}
+
 
 	if($result){
 		echo json_encode ( array (
@@ -114,4 +136,100 @@ function registrar() {
 		) );
 	}
  }
+
+ function deleteContribuyente() {
+ 	$contribuyente 	= new contribuyente();
+
+ 	if(isset($_POST["contribuyente_id"])){
+		 $contribuyente_id = $_POST["contribuyente_id"];
+	}else{
+		 $contribuyente_id = '';
+	}
+
+	if (!empty($contribuyente_id)) {
+		$result = $contribuyente->borrarContribuyente($contribuyente_id);
+ 		$result = $contribuyente->borrarRepresentante($contribuyente_id);
+	}else{
+		$result = false;
+	}
+
+ 	
+
+
+ 	if($result){
+		echo json_encode ( array (
+		"result" => "ok"
+		) );
+	}
+	else{
+		echo json_encode ( array (
+		"result" => "error"
+		) );
+	}
+ }
+
+ function resbusqueda(){
+
+	$condicion="1";
+
+	if(isset($_POST['razon_social']) && $_POST['razon_social']!="")
+	{
+		$razon_social=filter_input(INPUT_POST,"razon_social");
+		$condicion.= " AND razon_social LIKE '%$razon_social%'";
+	}
+
+	if(isset($_POST['rif']) && $_POST['rif']!="")
+	{
+		$rif=filter_input(INPUT_POST,"rif");
+		$condicion.= " AND rif LIKE '%$rif%'";
+	}	
+
+	if(isset($_POST['correo']) && $_POST['correo']!="")
+	{
+		$correo=filter_input(INPUT_POST,"correo");
+		$condicion.= " AND correo LIKE '%$correo%'";
+
+	}
+		 
+     $sql = new bd();
+	 $res=$sql->doFullSelect("contribuyentes",$condicion);
+	 if(!empty($res)){
+	 	
+		 ?>
+		 <?php 
+		 echo $condicion;
+		foreach ($res as $fila) {
+                ?>            
+                <tr>
+                    <td><?php echo $fila["razon_social"]; ?></td>
+                    <td><?php echo $fila["rif"]; ?></td>
+                    <td><?php echo $fila["domicilio"]; ?></td> 
+                    <td><?php echo $fila["correo"]; ?></td>
+                        
+                    <td>
+                    	<a href="?view=form&id=<?php echo $fila['contribuyente_id'];?>" >
+                    		<i class="fa fa-lock" ></i> Modificar
+                    	</a>
+                    </td>
+                    <td>
+
+                    	<a href="#del" class="delete-modal" data-toggle="modal" data-target='#msj-eliminar-m' data-contribuyente_id="<?php echo $fila['contribuyente_id']; ?>" data-action='function/f_contribuyente.php' data-method='deleteContribuyente'   >
+                    		<i class="fa fa-remove"></i> Eliminar
+                    	</a> 
+                   </td> 
+                    
+                </tr>
+                <?php
+            }
+            ?>
+            
+	 <?php	
+
+		
+	 }
+	 else{
+	 	?> <p> Vacio</p>
+	  <?php }
+
+}
  

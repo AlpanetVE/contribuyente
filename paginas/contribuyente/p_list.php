@@ -7,40 +7,27 @@
 	
 	<h3 class="text-center"> Listado de Inspecciones </h3> 	
 	
-	<form class="form-inline" role="form" id="filtro" name="filtro" method="POST" action="function/f_inspeccion.php">
-  <div class="form-group">
-    <input type="text" class="form-control" id="buscar_razon" name="buscar_razon"
-           placeholder="Razon social a buscar">
-  </div>
-  <div class="form-group">
+	<form class="form-inline" role="form" id="filtro" name="filtro" method="POST" action="function/f_contribuyente.php">
   
-    <input type="text" class="form-control" id="buscar_tipo_ente" name="buscar_tipo_ente" 
-           placeholder="Tipo de ente a buscar">
-  </div>
-  <div class="form-group">
-  
-    <input type="text" class="form-control" id="buscar_rif" name="buscar_rif" 
-           placeholder="RIF a buscar">
-  </div>
-  
-  <div class="form-group">
-  
-    <input type="text" class="form-control" id="buscar_funcionario" name="buscar_funcionario" 
-           placeholder="Funcionario a buscar">
-  </div>
-  
-  <div class="form-group">
-  
-    <input type="text" class="form-control" id="buscar_observ" name="buscar_observ" 
-           placeholder="Observacion buscar">
-  </div>
-  
-  <input type="hidden" class="form-control" id="method" name="method" value="searchfilter" />
-  
-  
-  <button  class="btn btn-default" id="filtrobuscar">Buscar <span class="glyphicon glyphicon-search"></span></button>
-  <a class="btn btn-primary pull-right" href="?view=form" >Agregar</a>
-</form>
+
+		<div class="form-group">
+			<input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Razon social a buscar">
+		</div>
+
+		<div class="form-group">  
+			<input type="text" class="form-control" id="rif" name="rif" placeholder="RIF a buscar">
+		</div>  
+
+		<div class="form-group">  
+			<input type="text" class="form-control" id="correo" name="correo" placeholder="Correo">
+		</div>
+
+
+			<input type="hidden" class="form-control" id="method" name="method" value="searchfilter" />
+		<button  class="btn btn-default" id="filtrobuscar">Buscar <span class="glyphicon glyphicon-search"></span></button>
+
+		<a class="btn btn-primary pull-right" href="?view=form" >Agregar</a>
+	</form>
 	
 <!--	<form class="form-inline" >
 	<div class="input-group" style="">
@@ -83,10 +70,13 @@
                     <td><?php echo $fila["correo"]; ?></td>
                         
                     <td>
-                    	<a href="#mod" class="update_user show-select-rol" data-toggle="modal" data-target="#usr-update-info" data-rol-type="select" data-tipo="1" data-method="actualizar" data-usuarios_id="<?php echo $fila['id']; ?>"  ><i class="fa fa-lock" ></i> Modificar</a>
+                    	<a href="?view=form&id=<?php echo $fila['contribuyente_id'];?>" >
+                    		<i class="fa fa-lock" ></i> Modificar
+                    	</a>
                     </td>
                     <td>
-                    	<a href="#del" class="select-usr-delete " data-toggle="modal" data-target='#msj-eliminar' data-status='3'  data-usuarios_id="<?php echo $fila['id']; ?>"   >
+
+                    	<a href="#del" class="delete-modal" data-toggle="modal" data-target='#msj-eliminar-m' data-contribuyente_id="<?php echo $fila['contribuyente_id']; ?>" data-action='function/f_contribuyente.php' data-method='deleteContribuyente'   >
                     		<i class="fa fa-remove"></i> Eliminar
                     	</a> 
                    </td> 

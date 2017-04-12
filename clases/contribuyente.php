@@ -25,12 +25,37 @@ class contribuyente {
 	private $correo_representante;
 	private $telefono_representante;
 	
-	public function getContribuyente($contribuyente_id=null,$razon_social=null,$rif=null,$domicilio=null,$parroquia_id=null,$telefono=null,$fax=null,$correo=null,$cierre_fiscal=null,$actividad=null){	
+	public function getContribuyente($contribuyente_id=null,$razon_social=null,$rif=null,$domicilio=null,$parroquia_id=null,$telefono=null,$fax=null,$correo=null,$cierre_fiscal=null,$actividad=null){
 		
 		$sql=new bd();
 		
 		$condicion='1';
+
+		if (!empty($contribuyente_id)) {
+			$condicion .= " and contribuyente_id = $contribuyente_id";
+		}
+
 		$result=$sql->doFullSelect($this->table, $condicion);
+		if(!empty ($result))
+			return $result;
+		else 
+			return false;
+
+	}
+	
+	public function getRepresentante($representante_id=null,$contribuyente_id=null){
+		
+		$sql=new bd();
+		
+		$condicion='1';
+
+		if (!empty($contribuyente_id)) {
+			$condicion .= " and contribuyente_id = $contribuyente_id";
+		}
+		if (!empty($representante_id)) {
+			$condicion .= " and representante_id = $representante_id";
+		}
+		$result=$sql->doFullSelect($this->tableRepresentante, $condicion);
 		if(!empty ($result))
 			return $result;
 		else 
@@ -55,15 +80,6 @@ class contribuyente {
 
 		return $sql->lastInsertId();
 	}
- 
-
-
-
-
-
-
-
-
 	public function registrarRepresentante($contribuyente_id,$nombre,$apellido,$rif,$correo,$telefono){		
 		
 		$sql=new bd();
@@ -80,11 +96,39 @@ class contribuyente {
 		return $sql->lastInsertId();
 	}
 
+	public function actualizarContribuyente($contribuyente_id=NULL, $data=NULL){
+		$bd=new bd();
+		$condicion="contribuyente_id=$contribuyente_id";
+		$result=$bd->doUpdate($this->table,$data,$condicion);
+		return $result;
+	}
+	public function actualizarRepresentante($contribuyente_id=NULL, $data=NULL){
+		$bd=new bd();
+		$condicion="contribuyente_id=$contribuyente_id";
+		$result=$bd->doUpdate($this->tableRepresentante,$data,$condicion);
+		return $result;
+	}
+
 	public function getInspecciones($campos){
 		$sql=new bd();
 		$consulta="select $campos FROM $this->table WHERE 1 ";
 		
 		//echo $consulta;
+        $result=$sql->query($consulta);
+		return $result;
+	}
+
+	public function borrarContribuyente($contribuyente_id){
+		$sql=new bd();
+		$consulta="DELETE FROM $this->table WHERE contribuyente_id = $contribuyente_id";
+		
+        $result=$sql->query($consulta);
+		return $result;
+	}
+	public function borrarRepresentante($contribuyente_id){
+		$sql=new bd();
+		$consulta="DELETE FROM $this->tableRepresentante WHERE contribuyente_id = $contribuyente_id";
+		
         $result=$sql->query($consulta);
 		return $result;
 	}

@@ -63,5 +63,29 @@ class site {
 		return $result;
 	}
 
+	public function getSities($id_parroquia = null,$id_municipio = null){
+		$sql=new bd();
+		$consulta="SELECT
+				estados.estado,
+				municipios.municipio,
+				parroquias.parroquia,
+				estados.id_estado,
+				parroquias.id_parroquia,
+				municipios.id_municipio
+				FROM
+				estados
+				INNER JOIN municipios ON municipios.id_estado = estados.id_estado
+				INNER JOIN parroquias ON parroquias.id_municipio = municipios.id_municipio
+				WHERE
+				parroquias.id_parroquia = $id_parroquia";
+				
+        $result=$sql->query($consulta);
+		return $result;
+	}
+
+
+	
+
+
 	
 }

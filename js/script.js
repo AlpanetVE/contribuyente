@@ -69,9 +69,6 @@ $('#usr-log-form').formValidation({
 	});
 
 
-
-
-
 /***** Validador de Formulario de registro de inspeccion*
 
 $("#register-submit").click(function(){
@@ -79,6 +76,49 @@ $("#register-submit").click(function(){
 	});
 
 **/
+	/*---======= FORM PARA ELIMINAR contribuyentes ========---*/
+    $("body").on('click', '.delete-modal', function(e) {
+    	var contribuyente_id 	= $(this).data('contribuyente_id');
+		var action 				= $(this).data('action');
+		var method 				= $(this).data('method');
+
+    	$('#act-form-delete')
+    	.data("id","contribuyente_id="+contribuyente_id)
+    	.data("action",action)
+    	.data("method",method);
+
+    });
+	/********************ELIMINAR**********************/
+	$('#act-form-delete').formValidation({
+
+	}).on('success.form.fv', function(e) {
+		var id 		= $(this).data('id');
+		var action 	= $(this).data('action');
+		var method 	= $(this).data('method');
+
+		e.preventDefault();
+		var string 	= "&method="+method+"&"+id;
+
+		$.ajax({
+			url: action, // la URL para la petición
+            data: string , // la información a enviar
+            type: 'POST', // especifica si será una petición POST o GET
+            dataType: 'json', // el tipo de información que se espera de respuesta
+            success: function (data) {
+            	if (data.result === 'ok'){
+            		location.reload();
+	            }else{
+	            	alert('error');
+	            	$('#msj-eliminar').modal('hide');
+                }
+
+          	},// código a ejecutar si la petición falla;
+            error: function (xhr, status) {
+            	SweetError(status);
+            }
+        });
+    });
+
  $('#reg-inspec').formValidation({
        locale: 'es_ES',
         framework: 'bootstrap',

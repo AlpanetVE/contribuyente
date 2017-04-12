@@ -2,7 +2,7 @@
 aria-labelledby="myLargeModalLabel" id="msj-eliminar-m">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id="usr-act-form-delete" action="function/f_usuarios.php" method="post" class="usr-act-form-edit form-inline" data-status="3" data-method="deleteUser" >
+			<form id="act-form-delete" method="post" class="act-form-delete form-inline" >
 
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
@@ -15,16 +15,16 @@ aria-labelledby="myLargeModalLabel" id="msj-eliminar-m">
 
 			<div class="modal-body marL20 marR20 ">
 				<br>
-				<p class="t16 text-center">&iquest;Estas seguro de eliminar definitivamente?</p>
+				<p class="t16 text-center">&iquest;Estas seguro que desea eliminar definitivamente?</p>
 			</div>
 
 
 			<div class="modal-footer">
 				<hr>
-				<button type="submit" class="btn btn-default btn-usr-act btn-usr-act marT15 marB5" data-action="act-pass">
+				<button type="submit" class="btn btn-default marT15 marB5" >
 					Cancelar
 				</button>
-				<button type="submit"   class="btn btn-primary2 btn-usr-act btn-usr-act marT10 marB5" data-action="act-pass">
+				<button type="submit" class="btn btn-primary2 marT10 marB5" >
 					Eliminar
 				</button>
 			</div>
