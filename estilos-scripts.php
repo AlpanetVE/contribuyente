@@ -18,6 +18,9 @@
 <link rel="stylesheet" type="text/css" href="css/magnific-popup.css"/>
 <link rel="stylesheet" type="text/css" href="css/slick.css" />
 <link rel="stylesheet" type="text/css" href="css/slick-theme.css"/>
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.css"/>
+
+
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>

@@ -68,7 +68,7 @@ $estados = $site->getEstados();
 			        </div>
 
 			        <div class="col-lg-6">
-			        	<label> Cierre Fiscal </label>	<input type="text" name="cierre_fiscal" id="cierre_fiscal" class="form-control" />
+			        	<label> Cierre Fiscal </label>	<input type="text" name="cierre_fiscal" id="cierre_fiscal" class="form-control datepicker" />
 			        </div>
 			        
 					<div class="col-lg-6" >

@@ -25,6 +25,18 @@ class contribuyente {
 	private $correo_representante;
 	private $telefono_representante;
 	
+	public function getContribuyente($contribuyente_id=null,$razon_social=null,$rif=null,$domicilio=null,$parroquia_id=null,$telefono=null,$fax=null,$correo=null,$cierre_fiscal=null,$actividad=null){	
+		
+		$sql=new bd();
+		
+		$condicion='1';
+		$result=$sql->doFullSelect($this->table, $condicion);
+		if(!empty ($result))
+			return $result;
+		else 
+			return false;
+
+	}
 	public function registrarContribuyente($razon_social,$rif,$domicilio,$parroquia_id,$telefono,$fax,$correo,$cierre_fiscal,$actividad){	
 		
 		$sql=new bd();
@@ -66,6 +78,15 @@ class contribuyente {
 		));
 		
 		return $sql->lastInsertId();
+	}
+
+	public function getInspecciones($campos){
+		$sql=new bd();
+		$consulta="select $campos FROM $this->table WHERE 1 ";
+		
+		//echo $consulta;
+        $result=$sql->query($consulta);
+		return $result;
 	}
 	
 }

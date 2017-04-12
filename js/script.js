@@ -2,6 +2,7 @@
 
 $(document ).ready(function() {
 
+$( ".datepicker" ).datepicker();
 
 /*---- Funcion para validar el logueo ----**/
 $('#usr-log-form').formValidation({
@@ -333,10 +334,37 @@ $("#register-submit").click(function(){
 						 validators: {
 								 notEmpty: {
 										 message: 'No admite valor vacio'
+								 },
+								 emailAddress: {
+			                        message: 'Correo electronico no valido'
+			                    }
+						 }
+				 },
+				 nombre: {
+						 validators: {
+								 notEmpty: {
+										 message: 'No admite valor vacio'
 								 }
 						 }
 				 },
-				 cierre_fiscal: {
+				 apellido: {
+						 validators: {
+								 notEmpty: {
+										 message: 'No admite valor vacio'
+								 }
+						 }
+				 },
+				 correo_representante: {
+						 validators: {
+								 notEmpty: {
+										 message: 'No admite valor vacio'
+								 },
+								 emailAddress: {
+			                        message: 'Correo electronico no valido'
+			                    }
+						 }
+				 },
+				 rif_representante: {
 						 validators: {
 								 notEmpty: {
 										 message: 'No admite valor vacio'
@@ -345,11 +373,9 @@ $("#register-submit").click(function(){
 				 }
 		 }
 		 }).on('success.field.fv', function(e, data) {
-		 if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
-				 data.fv.disableSubmitButtons(true);
-		 }
+		  
 	}).on('err.form.fv', function(e,data) {
-	 $(".dropdown-toggle").dropdown('toggle');
+	  
 	}).on('success.form.fv', function(e) {
 
 		e.preventDefault();

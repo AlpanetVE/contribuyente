@@ -10,7 +10,10 @@
 
 	switch ($view) {
 	    case '':
-	    case 'list':	        
+	    case 'list':
+
+			include "clases/contribuyente.php";
+	    	include "modales/m_delete.php";
 			include "paginas/contribuyente/p_list.php";
 	        break;
 	    case 'form':
