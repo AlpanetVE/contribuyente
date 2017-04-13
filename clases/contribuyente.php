@@ -106,6 +106,7 @@ class contribuyente {
 		$bd=new bd();
 		$condicion="contribuyente_id=$contribuyente_id";
 		$result=$bd->doUpdate($this->tableRepresentante,$data,$condicion);
+
 		return $result;
 	}
 

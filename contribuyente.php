@@ -3,6 +3,7 @@
 	<?php  include "estilos-scripts.php";
 		   require_once 'paginas/secure.php';
 	?>
+	<script type="text/javascript" src="js/contribuyente.js"></script>
  	<body class="">
  <div >
 <?php

@@ -127,12 +127,16 @@ class bd extends PDO {
 			$columns = "";
 			foreach ( $params as $key => $value ) {
 				$values [] = $value;
-				$columns .= "$key  = ?";
+				$columns .= "$key  = '$value'";
 				if ($key != $last_key) {
 					$columns .= ", ";
 				}
 			}
+			// var_dump($params);
+			// var_dump($columns);
+
 			$statement = "UPDATE $table SET $columns WHERE $condition";
+			 // var_dump($statement);
 			$sql = $this->prepare ( $statement );
 			$sql->execute ( $values );
 			if ($sql->rowCount () > 0) {
@@ -146,7 +150,7 @@ class bd extends PDO {
 	}
 	public function emptyTable($table) {
 		try {
-			var_dump ( $this->query ( "DELETE FROM $table" ) );
+			//var_dump ( $this->query ( "DELETE FROM $table" ) );
 			$this->query ( "ALTER TABLE $table auto_increment = 1" );
 		} catch ( PDOException $ex ) {
 			return $ex->getMessage ();

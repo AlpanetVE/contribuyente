@@ -160,7 +160,7 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 
 				<div class="row text-center" style="margin-top: 20px;">
 					<div class="col-lg-12">
-						<button onclick="goBack()" class="btn btn-default">Regresar</button>
+						<a href="?view=list" class="btn btn-default">Regresar</a href="?view=list">
 						<button id="register-submit" type="submit" class="btn btn-primary2">Guardar</button>
 					</div>
 				</div>

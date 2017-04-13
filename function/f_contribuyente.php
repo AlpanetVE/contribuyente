@@ -98,9 +98,9 @@ function registrar() {
 
 	$nombre				= filter_input(INPUT_POST,"nombre");
 	$apellido			= filter_input(INPUT_POST,"apellido");
-	$rif				= filter_input(INPUT_POST,"rif_representante");
-	$correo				= filter_input(INPUT_POST,"correo_representante");
-	$telefono			= filter_input(INPUT_POST,"telefono_representante");
+	$rif_representante		= filter_input(INPUT_POST,"rif_representante");
+	$correo_representante	= filter_input(INPUT_POST,"correo_representante");
+	$telefono_representante	= filter_input(INPUT_POST,"telefono_representante");
 
 	
 	$contribuyente_id	= filter_input(INPUT_POST,"contribuyente_id");
@@ -108,14 +108,14 @@ function registrar() {
 	if (empty($contribuyente_id)) {
 		$contribuyente_id=$contribuyente->registrarContribuyente($razon_social,$rif,$domicilio,$parroquia_id,$telefono,$fax,$correo,$cierre_fiscal,$actividad);
 
-		$result=$contribuyente->registrarRepresentante($contribuyente_id,$nombre,$apellido,$rif,$correo,$telefono);
+		$result=$contribuyente->registrarRepresentante($contribuyente_id,$nombre,$apellido,$rif_representante,$correo_representante,$telefono_representante);
 	}	
 	else{
 
 
 		$data 	= array( 'razon_social' => $razon_social,'rif' => $rif,'domicilio' => $domicilio,'parroquia_id' => $parroquia_id,'telefono' => $telefono,'fax' => $fax,'correo' => $correo,'cierre_fiscal' => $cierre_fiscal,'actividad' => $actividad);
 
-		$dataRp	= array( 'nombre' => $nombre,'apellido' => $apellido,'rif' => $rif,'correo' => $correo,'telefono' => $telefono);
+		$dataRp	= array( 'nombre' => $nombre,'apellido' => $apellido,'rif' => $rif_representante,'correo' => $correo_representante,'telefono' => $telefono_representante);
 
 
 		$result=$contribuyente->actualizarContribuyente($contribuyente_id, $data);
@@ -170,8 +170,10 @@ function registrar() {
 
  function resbusqueda(){
 
-	$condicion="1";
-
+	$condicion	= "1";
+	$pagina 	= $_POST['pagina'];
+	$cant 		= $_POST['cant'];
+	$start		= $cant*($pagina-1);
 	if(isset($_POST['razon_social']) && $_POST['razon_social']!="")
 	{
 		$razon_social=filter_input(INPUT_POST,"razon_social");
@@ -190,7 +192,8 @@ function registrar() {
 		$condicion.= " AND correo LIKE '%$correo%'";
 
 	}
-		 
+	
+	 $condicion .= " limit $start,$cant";
      $sql = new bd();
 	 $res=$sql->doFullSelect("contribuyentes",$condicion);
 	 if(!empty($res)){

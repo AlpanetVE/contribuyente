@@ -2,7 +2,7 @@
 
 $(document ).ready(function() {
 
-$( ".datepicker" ).datepicker();
+$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
 /*---- Funcion para validar el logueo ----**/
 $('#usr-log-form').formValidation({
@@ -108,7 +108,7 @@ $("#register-submit").click(function(){
             	if (data.result === 'ok'){
             		location.reload();
 	            }else{
-	            	alert('error');
+//	            	alert('error');
 	            	$('#msj-eliminar').modal('hide');
                 }
 
