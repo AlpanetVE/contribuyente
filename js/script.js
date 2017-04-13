@@ -58,7 +58,7 @@ $('#usr-log-form').formValidation({
 
 	            } else{
 								 //alert("registro con exito");
-	            	window.location.href = "list.php";
+	            	window.location.href = "contribuyente.php";
 
                 }
           	},// código a ejecutar si la petición falla;
@@ -183,7 +183,7 @@ $("#register-submit").click(function(){
 
 	            if(data.result==='OK'){
 	            //alert("registro con exito");
-	           window.location.href = "list.php";
+	           window.location.href = "contribuyente.php";
 	            }
 
 	            if (data.result === 'error'){
@@ -284,7 +284,7 @@ $("#register-submit").click(function(){
 
 								 if(data.result=='ok'){
 								 //alert("registro con exito");
-								window.location.href = "list.php";
+								window.location.href = "contribuyente.php";
 								 }
 
 								 if (data.result === 'error'){
@@ -320,9 +320,10 @@ $("#register-submit").click(function(){
 			success: function (data) {
 
 				if(data.result=='ok'){
-					 $(data.inputRemove).remove();					
+					$(data.inputRemove).remove();		
+					$(data.input).append('<option value="">Seleccione</option>')			
 				    $.each(data.campos, function(){
-				        $(data.input).append('<option value="'+ this.value +'">'+ this.name +'</option>')
+				        $(data.input).append('<option value="'+ this.value +'">'+ this.name +'</option>');
 				    })
 				}
 			},// código a ejecutar si la petición falla;

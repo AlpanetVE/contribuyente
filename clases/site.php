@@ -77,7 +77,7 @@ class site {
 				INNER JOIN municipios ON municipios.id_estado = estados.id_estado
 				INNER JOIN parroquias ON parroquias.id_municipio = municipios.id_municipio
 				WHERE
-				parroquias.id_parroquia = $id_parroquia";
+				parroquias.id_parroquia = '$id_parroquia'";
 				
         $result=$sql->query($consulta);
 		return $result;
