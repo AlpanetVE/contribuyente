@@ -133,5 +133,53 @@ class contribuyente {
         $result=$sql->query($consulta);
 		return $result;
 	}
+
+
+	public function getAllData($razon_social,$rif,$correo){
+		$sql 	= new bd();
+
+		$query = "SELECT
+					c.razon_social,
+					c.rif,
+					c.domicilio,
+					c.telefono,
+					c.fax,
+					c.correo,
+					c.cierre_fiscal,
+					c.actividad,
+					r.nombre as representante_nombre,
+					r.apellido as representante_apellido,
+					r.rif as representante_rif,
+					r.correo as representante_correo,
+					r.telefono as representante_telefono,
+					p.parroquia,
+					m.municipio,
+					e.estado
+					FROM
+					representante AS r
+					INNER JOIN contribuyentes AS c ON c.contribuyente_id = r.contribuyente_id
+					INNER JOIN parroquias AS p ON c.parroquia_id = p.id_parroquia
+					INNER JOIN municipios AS m ON p.id_municipio = m.id_municipio 
+					INNER JOIN estados AS e ON m.id_estado = e.id_estado
+					WHERE 1";
+
+		if(!empty($razon_social)){
+			$query.= " AND c.razon_social LIKE '%$razon_social%'";
+		}
+		if(!empty($rif)){
+			$query.= " AND c.rif LIKE '%$rif%'";
+		}
+		if(!empty($correo)){
+			$query.= " AND c.correo LIKE '%$correo%'";
+		}
+
+		return $sql->query($query);
+	}
+
+
+
+
+
+
 	
 }

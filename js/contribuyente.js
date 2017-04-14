@@ -2,6 +2,19 @@ $(document ).ready(function() {
 
 	paginar(1,$('#filtro'));
 	
+	
+
+	$(document).on("click",".imprimirContribuyente",function(e){
+		e.preventDefault();
+
+		var razon_social	= $('#razon_social').val();
+		var rif				= $('#rif').val();
+		var correo			= $('#correo').val();
+
+		window.open('imprimirContribuyente.php?razon_social='+razon_social+'&rif='+rif+'&correo='+correo, '_blank');
+
+	});
+
 	$(document).on("click",".botonPaginador, .navegador",function(e){
 		e.preventDefault();
 		var form 	= $('#filtro');

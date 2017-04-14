@@ -217,8 +217,7 @@ public function crear(){
 					setcookie("c_nombre", $result["nombre"], 0,'/');
 					setcookie("c_status", $result["status"], 0,'/');
 					return array(1,$result["idusuarios"]);
-				}else{
-
+				}else{	
 					return array(4,$result["idusuarios"]);
 				}
 		}else{

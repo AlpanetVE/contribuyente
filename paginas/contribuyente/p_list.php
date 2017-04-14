@@ -33,6 +33,7 @@
 			<input type="text" class="form-control" id="correo" name="correo" placeholder="Correo">
 		</div>		
 		<button  class="btn btn-default" id="filtrobuscar">Buscar <span class="glyphicon glyphicon-search"></span></button>
+		<a class="imprimirContribuyente btn btn-default" >Imprimir</a>
 
 		<a class="btn btn-primary pull-right" href="?view=form" >Agregar</a>
 	</form>
