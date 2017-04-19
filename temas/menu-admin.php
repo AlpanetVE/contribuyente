@@ -17,8 +17,8 @@
 			<?php }?>
 			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"></i> Contribuyente <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="Contribuyente.php?view=form"><i class="fa fa-user-plus"></i> Agregar</a></li>
-						<li><a href="Contribuyente.php?view=list"><i class="fa fa-search"></i> Buscar</a></li>
+						<li><a href="contribuyente.php?view=form"><i class="fa fa-user-plus"></i> Agregar</a></li>
+						<li><a href="contribuyente.php?view=list"><i class="fa fa-search"></i> Buscar</a></li>
 					</ul>
 				</li>
 			<li><a href="logout.php"> <i class="fa fa-sign-out"></i> Salir</a></li>
