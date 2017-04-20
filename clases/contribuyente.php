@@ -62,7 +62,7 @@ class contribuyente {
 			return false;
 
 	}
-	public function registrarContribuyente($razon_social,$rif,$domicilio,$parroquia_id,$telefono,$fax,$correo,$cierre_fiscal,$actividad){	
+	public function registrarContribuyente($razon_social=null,$rif=null,$domicilio=null,$parroquia_id=null,$telefono=null,$fax=null,$correo=null,$cierre_fiscal=null,$actividad=null,$status_id=null){	
 		
 		$sql=new bd();
 		
@@ -75,12 +75,13 @@ class contribuyente {
 				"fax" 			=> $fax,
 				"correo" 		=> $correo,
 				"cierre_fiscal" => $cierre_fiscal,
-				"actividad" 	=> $actividad
+				"actividad" 	=> $actividad,
+				"status_id" 	=> $status_id
 		));
 
 		return $sql->lastInsertId();
 	}
-	public function registrarRepresentante($contribuyente_id,$nombre,$apellido,$rif,$correo,$telefono){		
+	public function registrarRepresentante($contribuyente_id=null,$nombre=null,$apellido=null,$rif=null,$correo=null,$telefono=null){		
 		
 		$sql=new bd();
 		
@@ -133,35 +134,36 @@ class contribuyente {
         $result=$sql->query($consulta);
 		return $result;
 	}
-
-
 	public function getAllData($razon_social,$rif,$correo){
 		$sql 	= new bd();
 
 		$query = "SELECT
-					c.razon_social,
-					c.rif,
-					c.domicilio,
-					c.telefono,
-					c.fax,
-					c.correo,
-					c.cierre_fiscal,
-					c.actividad,
-					r.nombre as representante_nombre,
-					r.apellido as representante_apellido,
-					r.rif as representante_rif,
-					r.correo as representante_correo,
-					r.telefono as representante_telefono,
-					p.parroquia,
-					m.municipio,
-					e.estado
-					FROM
-					representante AS r
-					INNER JOIN contribuyentes AS c ON c.contribuyente_id = r.contribuyente_id
-					INNER JOIN parroquias AS p ON c.parroquia_id = p.id_parroquia
-					INNER JOIN municipios AS m ON p.id_municipio = m.id_municipio 
-					INNER JOIN estados AS e ON m.id_estado = e.id_estado
-					WHERE 1";
+				c.razon_social,
+				c.rif,
+				c.domicilio,
+				c.telefono,
+				c.fax,
+				c.correo,
+				c.cierre_fiscal,
+				c.actividad,
+				r.nombre AS representante_nombre,
+				r.apellido AS representante_apellido,
+				r.rif AS representante_rif,
+				r.correo AS representante_correo,
+				r.telefono AS representante_telefono,
+				p.parroquia,
+				m.municipio,
+				e.estado,
+				s.estatus
+				FROM
+				representante AS r
+				INNER JOIN contribuyentes AS c ON c.contribuyente_id = r.contribuyente_id
+				INNER JOIN parroquias AS p ON c.parroquia_id = p.id_parroquia
+				INNER JOIN municipios AS m ON p.id_municipio = m.id_municipio
+				INNER JOIN estados AS e ON m.id_estado = e.id_estado
+				INNER JOIN estatus AS s ON s.estatus_id = c.status_id
+				WHERE
+				1";
 
 		if(!empty($razon_social)){
 			$query.= " AND c.razon_social LIKE '%$razon_social%'";
@@ -176,7 +178,20 @@ class contribuyente {
 		return $sql->query($query);
 	}
 
+	public function getStatus($estatus_id = null){
+		$sql=new bd();
+		$consulta="SELECT *
+					FROM
+					estatus
+					WHERE 1";
 
+		if (!empty($estatus_id)) {
+			$consulta.=" and estatus_id in ($estatus_id)";
+		}
+		$consulta .= ' order by estatus_id asc';
+        $result=$sql->query($consulta);
+		return $result;
+	}
 
 
 

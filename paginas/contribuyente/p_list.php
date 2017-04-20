@@ -49,6 +49,7 @@
                 <th class="text-center">RIF</th>
                 <th class="text-center">Domicilio</th>
                 <th class="text-center">Correo</th>
+                <th class="text-center">Estatus</th>
                 <th colspan="2" class="text-center">Acciones</th>     
             </tr>
             <tbody id="ajaxCont">

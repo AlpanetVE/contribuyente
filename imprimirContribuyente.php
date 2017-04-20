@@ -13,7 +13,7 @@ $objContribuyente 	= new contribuyente();
 
 $data = $objContribuyente -> getAllData($razon_social,$rif,$correo);
 
-$header = array('A' =>'Razon', 'B' => 'RIF', 'C' => 'Domicilio', 'D' => 'Telefono', 'E' => 'Fax', 'F' => 'Correo', 'G' => 'Cierre', 'H' => 'Actividad', 'I' => 'Nombre del Representante', 'J' => 'Apellido del Representante', 'K' => 'RIF del Representante', 'L' => 'Correo del Representante', 'M' => 'Telefono del Representante', 'N' => 'Parroquia', 'O' => 'Municipio', 'P' => 'Estado');
+$header = array('A' =>'Razon', 'B' => 'RIF', 'C' => 'Domicilio', 'D' => 'Telefono', 'E' => 'Fax', 'F' => 'Correo', 'G' => 'Cierre', 'H' => 'Actividad','I' => 'Estatus', 'J' => 'Nombre del Representante', 'K' => 'Apellido del Representante', 'L' => 'RIF del Representante', 'M' => 'Correo del Representante', 'N' => 'Telefono del Representante', 'O' => 'Parroquia', 'P' => 'Municipio', 'Q' => 'Estado');
 
 
 	$objPHPExcel 	= new PHPExcel();
@@ -33,14 +33,15 @@ $header = array('A' =>'Razon', 'B' => 'RIF', 'C' => 'Domicilio', 'D' => 'Telefon
 		$objPHPExcel->getActiveSheet()->setCellValue('F'.$cont, $value['correo']);
 		$objPHPExcel->getActiveSheet()->setCellValue('G'.$cont, $value['cierre_fiscal']);
 		$objPHPExcel->getActiveSheet()->setCellValue('H'.$cont, $value['actividad']);
-		$objPHPExcel->getActiveSheet()->setCellValue('I'.$cont, $value['representante_nombre']);
-		$objPHPExcel->getActiveSheet()->setCellValue('J'.$cont, $value['representante_apellido']);
-		$objPHPExcel->getActiveSheet()->setCellValue('K'.$cont, $value['representante_rif']);
-		$objPHPExcel->getActiveSheet()->setCellValue('L'.$cont, $value['representante_correo']);
-		$objPHPExcel->getActiveSheet()->setCellValue('M'.$cont, $value['representante_telefono']);
-		$objPHPExcel->getActiveSheet()->setCellValue('N'.$cont, $value['parroquia']);
-		$objPHPExcel->getActiveSheet()->setCellValue('O'.$cont, $value['municipio']);
-		$objPHPExcel->getActiveSheet()->setCellValue('P'.$cont, $value['estado']);
+		$objPHPExcel->getActiveSheet()->setCellValue('I'.$cont, $value['estatus']);
+		$objPHPExcel->getActiveSheet()->setCellValue('J'.$cont, $value['representante_nombre']);
+		$objPHPExcel->getActiveSheet()->setCellValue('K'.$cont, $value['representante_apellido']);
+		$objPHPExcel->getActiveSheet()->setCellValue('L'.$cont, $value['representante_rif']);
+		$objPHPExcel->getActiveSheet()->setCellValue('M'.$cont, $value['representante_correo']);
+		$objPHPExcel->getActiveSheet()->setCellValue('N'.$cont, $value['representante_telefono']);
+		$objPHPExcel->getActiveSheet()->setCellValue('O'.$cont, $value['parroquia']);
+		$objPHPExcel->getActiveSheet()->setCellValue('P'.$cont, $value['municipio']);
+		$objPHPExcel->getActiveSheet()->setCellValue('Q'.$cont, $value['estado']);
 		$cont++;
 	}
 

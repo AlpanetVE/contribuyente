@@ -6,6 +6,7 @@ $objContribuyente = new contribuyente();
 $estados 		= $objSite->getEstados();
 $municipios 	= $objSite->getMunicipios();
 $parroquias 	= $objSite->getParroquias();
+$arrStatus 		= $objContribuyente->getStatus();
 
 
 
@@ -133,6 +134,24 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 					<div class="col-lg-6" >
 				   		<label> Actividad Economica </label> <input value='<?php echo $data["actividad"];?>' type="text" name="actividad" id="actividad"  class="form-control" />
 				    </div>
+
+				    <div class="col-lg-6">
+			        	<label> Estatus </label>
+			        	<select name="estatus_id" id="estatus_id" class="form-control" >
+						  <option>Seleccione</option>
+						  <?php
+						    foreach($arrStatus as $status) {
+						    	if ($status['estatus_id']==$data["estatus_id"]) {
+						    		$select='selected="selected"';
+						    	}else{
+						    		$select='';
+						    	}
+						    	?>
+						      <option value="<?php echo $status['estatus_id'] ?>" <?php echo $select;?> ><?php echo $status['estatus'] ?></option>
+						  <?php
+						    } ?>
+						</select>
+			        </div>
 				    <div class='col-sm-12'>
 				    	<hr>
 				    </div>

@@ -95,6 +95,7 @@ function registrar() {
 	$correo				= filter_input(INPUT_POST,"correo");
 	$cierre_fiscal		= filter_input(INPUT_POST,"cierre_fiscal");
 	$actividad			= filter_input(INPUT_POST,"actividad");
+	$estatus_id			= filter_input(INPUT_POST,"estatus_id");
 
 	$nombre				= filter_input(INPUT_POST,"nombre");
 	$apellido			= filter_input(INPUT_POST,"apellido");
@@ -106,7 +107,7 @@ function registrar() {
 	$contribuyente_id	= filter_input(INPUT_POST,"contribuyente_id");
 
 	if (empty($contribuyente_id)) {
-		$contribuyente_id=$contribuyente->registrarContribuyente($razon_social,$rif,$domicilio,$parroquia_id,$telefono,$fax,$correo,$cierre_fiscal,$actividad);
+		$contribuyente_id=$contribuyente->registrarContribuyente($razon_social,$rif,$domicilio,$parroquia_id,$telefono,$fax,$correo,$cierre_fiscal,$actividad,$estatus_id);
 
 		$result=$contribuyente->registrarRepresentante($contribuyente_id,$nombre,$apellido,$rif_representante,$correo_representante,$telefono_representante);
 	}	
@@ -207,8 +208,7 @@ function registrar() {
                     <td><?php echo $fila["razon_social"]; ?></td>
                     <td><?php echo $fila["rif"]; ?></td>
                     <td><?php echo $fila["domicilio"]; ?></td> 
-                    <td><?php echo $fila["correo"]; ?></td>
-                        
+                    <td><?php echo $fila["correo"]; ?></td>                        
                     <td>
                     	<a href="?view=form&id=<?php echo $fila['contribuyente_id'];?>" >
                     		<i class="fa fa-lock" ></i> Modificar

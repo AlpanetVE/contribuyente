@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-04-15 19:42:02
+Date: 2017-04-20 14:18:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -546,8 +546,9 @@ CREATE TABLE `contribuyentes` (
   `correo` varchar(50) DEFAULT NULL,
   `cierre_fiscal` date DEFAULT NULL,
   `actividad` varchar(255) DEFAULT NULL,
+  `status_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`contribuyente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of contribuyentes
@@ -592,6 +593,25 @@ INSERT INTO `estados` VALUES ('22', 'Yaracuy', 'VE-U');
 INSERT INTO `estados` VALUES ('23', 'Zulia', 'VE-V');
 INSERT INTO `estados` VALUES ('24', 'Distrito Capital', 'VE-A');
 INSERT INTO `estados` VALUES ('25', 'Dependencias Federales', 'VE-Z');
+
+-- ----------------------------
+-- Table structure for estatus
+-- ----------------------------
+DROP TABLE IF EXISTS `estatus`;
+CREATE TABLE `estatus` (
+  `estatus_id` int(11) NOT NULL,
+  `estatus` varchar(45) NOT NULL,
+  PRIMARY KEY (`estatus_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of estatus
+-- ----------------------------
+INSERT INTO `estatus` VALUES ('1', 'Desincorporados');
+INSERT INTO `estatus` VALUES ('2', ' Activo');
+INSERT INTO `estatus` VALUES ('3', 'Inactivo');
+INSERT INTO `estatus` VALUES ('4', ' Traslado de región');
+INSERT INTO `estatus` VALUES ('5', 'Sin notificar');
 
 -- ----------------------------
 -- Table structure for inspeccion
@@ -2141,7 +2161,7 @@ CREATE TABLE `representante` (
   `correo` varchar(50) DEFAULT NULL,
   `telefono` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`representante_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of representante
