@@ -11,7 +11,7 @@ $(document ).ready(function() {
 		var rif				= $('#rif').val();
 		var correo			= $('#correo').val();
 
-		window.open('imprimirContribuyente.php?razon_social='+razon_social+'&rif='+rif+'&correo='+correo, '_blank');
+		window.open('imprimir_contribuyente.php?razon_social='+razon_social+'&rif='+rif+'&correo='+correo, '_blank');
 
 	});
 
