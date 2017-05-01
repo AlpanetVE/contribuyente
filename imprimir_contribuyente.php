@@ -3,15 +3,19 @@ require 'paginas/secure.php';
 include 'clases/contribuyente.php';
 include 'clases/lib/PHPExcel.php';
 
-
-$razon_social 	= $_GET['razon_social'];
 $rif 			= $_GET['rif'];
-$correo 		= $_GET['correo'];
+
+$id_estado 		= $_GET['id_estado'];
+$id_municipio 	= $_GET['id_municipio'];
+$id_parroquia 	= $_GET['id_parroquia'];
+$estatus_id 	= $_GET['estatus_id'];
+$rifComienza 	= $_GET['rifComienza'];
+$rifTermina 	= $_GET['rifTermina'];
 
  
 $objContribuyente 	= new contribuyente();
 
-$data = $objContribuyente -> getAllData($razon_social,$rif,$correo);
+$data = $objContribuyente -> getAllData($rif,$id_estado,$id_municipio,$id_parroquia,$estatus_id,$rifComienza ,$rifTermina);
 
 $header = array('A' =>'Razon', 'B' => 'RIF', 'C' => 'Domicilio', 'D' => 'Telefono', 'E' => 'Fax', 'F' => 'Correo', 'G' => 'Cierre', 'H' => 'Actividad','I' => 'Estatus', 'J' => 'Nombre del Representante', 'K' => 'Apellido del Representante', 'L' => 'RIF del Representante', 'M' => 'Correo del Representante', 'N' => 'Telefono del Representante', 'O' => 'Parroquia', 'P' => 'Municipio', 'Q' => 'Estado');
 

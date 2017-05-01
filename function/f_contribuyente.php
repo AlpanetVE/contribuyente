@@ -107,12 +107,20 @@ function registrar() {
 	$contribuyente_id	= filter_input(INPUT_POST,"contribuyente_id");
 
 	if (empty($contribuyente_id)) {
-		$contribuyente_id=$contribuyente->registrarContribuyente($razon_social,$rif,$domicilio,$parroquia_id,$telefono,$fax,$correo,$cierre_fiscal,$actividad,$estatus_id);
 
-		$result=$contribuyente->registrarRepresentante($contribuyente_id,$nombre,$apellido,$rif_representante,$correo_representante,$telefono_representante);
-	}	
+		if (!$contribuyente->rifExist($rif)) {
+		
+			$contribuyente_id=$contribuyente->registrarContribuyente($razon_social,$rif,$domicilio,$parroquia_id,$telefono,$fax,$correo,$cierre_fiscal,$actividad,$estatus_id);
+
+			$result=$contribuyente->registrarRepresentante($contribuyente_id,$nombre,$apellido,$rif_representante,$correo_representante,$telefono_representante);
+		}else{
+			$result = false;
+			$fields = array("rif" => "Este rif ya esta en uso");
+		}
+		
+		
+	}
 	else{
-
 
 		$data 	= array( 'razon_social' => $razon_social,'rif' => $rif,'domicilio' => $domicilio,'parroquia_id' => $parroquia_id,'telefono' => $telefono,'fax' => $fax,'correo' => $correo,'cierre_fiscal' => $cierre_fiscal,'actividad' => $actividad,'estatus_id' => $estatus_id);
 
@@ -134,7 +142,8 @@ function registrar() {
 	}
 	else{
 		echo json_encode ( array (
-		"result" => "error"
+		"result" => "error",
+		"fields" => $fields
 		) );
 	}
  }
@@ -172,38 +181,30 @@ function registrar() {
 
  function resbusqueda(){
 
-	$condicion	= "1";
 	$pagina 	= $_POST['pagina'];
 	$cant 		= $_POST['cant'];
 	$start		= $cant*($pagina-1);
-	if(isset($_POST['razon_social']) && $_POST['razon_social']!="")
-	{
-		$razon_social=filter_input(INPUT_POST,"razon_social");
-		$condicion.= " AND razon_social LIKE '%$razon_social%'";
-	}
+	$limit 		= " limit $start,$cant";
 
-	if(isset($_POST['rif']) && $_POST['rif']!="")
-	{
-		$rif=filter_input(INPUT_POST,"rif");
-		$condicion.= " AND rif LIKE '%$rif%'";
-	}	
 
-	if(isset($_POST['correo']) && $_POST['correo']!="")
-	{
-		$correo=filter_input(INPUT_POST,"correo");
-		$condicion.= " AND correo LIKE '%$correo%'";
+	$rif 			= filter_input(INPUT_POST,"rif");
+	$id_estado 		= filter_input(INPUT_POST,"id_estado");
+	$id_municipio 	= filter_input(INPUT_POST,"id_municipio");
+	$id_parroquia 	= filter_input(INPUT_POST,"id_parroquia");
+	$estatus_id 	= filter_input(INPUT_POST,"estatus_id");
+	$rifComienza 	= filter_input(INPUT_POST,"rifComienza");
+	$rifTermina 	= filter_input(INPUT_POST,"rifTermina");
 
-	}
-	
-	 $condicion .= " limit $start,$cant";
-     $sql = new bd();
-	 $res=$sql->doFullSelect("contribuyentes",$condicion);
-	 if(!empty($res)){
+	 
+	$objContribuyente 	= new contribuyente();
+
+	$data = $objContribuyente -> getAllData($rif,$id_estado,$id_municipio,$id_parroquia,$estatus_id,$rifComienza ,$rifTermina, $limit);
+
+	 if(!empty($data)){
 	 	
 		 ?>
-		 <?php 
-		 echo $condicion;
-		foreach ($res as $fila) {
+		 <?php
+		foreach ($data as $fila) {
                 ?>            
                 <tr>
                     <td><?php echo $fila["razon_social"]; ?></td>

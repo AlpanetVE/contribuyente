@@ -1,6 +1,11 @@
 <?php
-	
+	$objSite = new site();
 	$objContribuyente 	= new contribuyente();
+
+	$estados 			= $objSite->getEstados();
+	$municipios 		= $objSite->getMunicipios();
+	$parroquias 		= $objSite->getParroquias();
+	$arrStatus 			= $objContribuyente->getStatus();
 
 	$result				= $objContribuyente->getInspecciones('count(contribuyente_id) as total')->fetch();
 	$total				= $result['total'];
@@ -22,16 +27,65 @@
 		<input type="hidden" id="cant" name="cant" value="<?php echo $cant;?>" />
 
 		<div class="form-group">
-			<input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Razon social a buscar">
+			<input type="text" class="form-control" id="rif" name="rif" maxlength="12"  placeholder="RIF a buscar">
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" id="rifComienza" name="rifComienza" maxlength="1"  placeholder="RIF primer Digito">
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" id="rifTermina" name="rifTermina" maxlength="1"  placeholder="RIF Terminacion">
 		</div>
 
-		<div class="form-group">  
-			<input type="text" class="form-control" id="rif" name="rif" maxlength="12"  placeholder="RIF a buscar">
-		</div>  
+		<div class="form-group">
+			        	
+        	<select name="id_estado" id="estado" class="form-control doAjax" data-method='getMunicipios' data-func='f_contribuyente.php'>
+			  <option value="">Estados</option>
+			  <?php
+			    foreach($estados as $estado) { ?>
+			      <option value="<?php echo $estado['id_estado'] ?>" ><?php echo $estado['estado'] ?></option>
+			  <?php
+			    } ?>
+			</select>
+        </div>
+        <div class="form-group">
+        	
+        	<select name="id_municipio" id="municipio" class="form-control doAjax" data-method='getParroquias' data-func='f_contribuyente.php'>
+			  <option value="">Municipio</option>
+			  <?php
+			    foreach($municipios as $municipio) { ?>
+			      <option value="<?php echo $municipio['id_municipio'] ?>" ><?php echo $municipio['municipio'] ?></option>
+			  <?php
+			    } ?>
+			</select>
+        </div>
+        <div class="form-group">			        	
+        	<select name="id_parroquia" id="parroquia" class="form-control" >
+			  <option value="">Parroquia</option>
+			  <?php
+			    foreach($parroquias as $parroquia) { ?>
+			      <option value="<?php echo $parroquia['id_parroquia'] ?>" ><?php echo $parroquia['parroquia'] ?></option>
+			  <?php
+			    } ?>
+			</select>
+        </div>
+        <div class="form-group">
+			<select name="estatus_id" id="estatus_id" class="form-control" >
+			  <option value="">Estatus</option>
+			  <?php
+			    foreach($arrStatus as $status) {
+			    	if ($status['estatus_id']==$data["estatus_id"]) {
+			    		$select='selected="selected"';
+			    	}else{
+			    		$select='';
+			    	}
+			    	?>
+			      <option value="<?php echo $status['estatus_id'] ?>" <?php echo $select;?> ><?php echo $status['estatus'] ?></option>
+			  <?php
+			    } ?>
+			</select>
+        </div>
 
-		<div class="form-group">  
-			<input type="text" class="form-control" id="correo" name="correo" placeholder="Correo">
-		</div>		
+
 		<button  class="btn btn-default" id="filtrobuscar">Buscar <span class="glyphicon glyphicon-search"></span></button>
 		<a class="imprimirContribuyente btn btn-default" >Imprimir</a>
 

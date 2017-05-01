@@ -176,7 +176,10 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 				    </div>
 				    
 				</div>
-
+				<div class="alert success" style="display: none;">
+				  <span class="closebtn">×</span>  
+				  <strong>¡Exito!</strong> Los datos han sido guardados
+				</div>
 				<div class="row text-center" style="margin-top: 20px;">
 					<div class="col-lg-12">
 						<a href="?view=list" class="btn btn-default">Regresar</a href="?view=list">

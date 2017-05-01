@@ -133,7 +133,7 @@ class contribuyente {
         $result=$sql->query($consulta);
 		return $result;
 	}
-	public function getAllData($razon_social,$rif,$correo){
+	public function getAllData($rif,$id_estado,$id_municipio,$id_parroquia,$estatus_id,$rifComienza ,$rifTermina,$limit = null){
 		$sql 	= new bd();
 
 		$query = "SELECT
@@ -145,6 +145,7 @@ class contribuyente {
 				c.correo,
 				c.cierre_fiscal,
 				c.actividad,
+				c.contribuyente_id,
 				r.nombre AS representante_nombre,
 				r.apellido AS representante_apellido,
 				r.rif AS representante_rif,
@@ -160,20 +161,40 @@ class contribuyente {
 				INNER JOIN parroquias AS p ON c.parroquia_id = p.id_parroquia
 				INNER JOIN municipios AS m ON p.id_municipio = m.id_municipio
 				INNER JOIN estados AS e ON m.id_estado = e.id_estado
-				INNER JOIN estatus AS s ON s.estatus_id = c.status_id
+				INNER JOIN estatus AS s ON s.estatus_id = c.estatus_id
 				WHERE
 				1";
-
-		if(!empty($razon_social)){
-			$query.= " AND c.razon_social LIKE '%$razon_social%'";
-		}
+		
 		if(!empty($rif)){
 			$query.= " AND c.rif LIKE '%$rif%'";
 		}
-		if(!empty($correo)){
-			$query.= " AND c.correo LIKE '%$correo%'";
+		if(!empty($rifComienza)){
+			$query.= " AND c.rif LIKE '$rifComienza%'";
+		}
+		if(!empty($rifTermina)){
+			$query.= " AND c.rif LIKE '%$rifTermina'";
+		}
+		if (!empty($id_estado)) {
+			$query.= " AND e.id_estado = $id_estado";
 		}
 
+		if (!empty($id_municipio)) {
+			$query.= " AND m.id_municipio = $id_municipio";
+		}
+
+		if (!empty($id_parroquia)) {
+			$query.= " AND p.id_parroquia = $id_parroquia";
+		}
+
+		if (!empty($estatus_id)) {
+			$query.= " AND c.estatus_id = $estatus_id";
+		}
+
+		if (!empty($limit)) {
+			$query.= $limit;
+		}
+
+		//var_dump($query);
 		return $sql->query($query);
 	}
 
@@ -192,6 +213,15 @@ class contribuyente {
 		return $result;
 	}
 
+	public function rifExist($rif){
+		$sql=new bd();
+		return ($sql->doSingleSelect('contribuyentes', "rif = '$rif'", 'rif'));
+	}
+	public function rifExistRepresentante($rif){
+		$sql=new bd();
+		return ($sql->doSingleSelect('representante', "rif = '$rif'", 'rif'));
+
+	}
 
 
 

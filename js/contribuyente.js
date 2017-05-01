@@ -7,11 +7,16 @@ $(document ).ready(function() {
 	$(document).on("click",".imprimirContribuyente",function(e){
 		e.preventDefault();
 
-		var razon_social	= $('#razon_social').val();
-		var rif				= $('#rif').val();
-		var correo			= $('#correo').val();
+		var rif					= $('#rif').val();
+		var id_estado			= $('#estado').val();
+		var id_municipio		= $('#municipio').val();
+		var id_parroquia		= $('#parroquia').val();
+		var estatus_id			= $('#estatus_id').val();
+		var rifComienza			= $('#rifComienza').val();
+		var rifTermina			= $('#rifTermina').val();
 
-		window.open('imprimir_contribuyente.php?razon_social='+razon_social+'&rif='+rif+'&correo='+correo, '_blank');
+		
+		window.open('imprimir_contribuyente.php?rif='+rif+'&id_estado='+id_estado+'&id_municipio='+id_municipio+'&id_parroquia='+id_parroquia+'&estatus_id='+estatus_id+'&rifComienza='+rifComienza+'&rifTermina='+rifTermina, '_blank');
 
 	});
 

@@ -9,18 +9,14 @@
  <div >
 <?php
 	$view = isset($_REQUEST["view"])?$_REQUEST["view"]:'';
-
+	include "clases/contribuyente.php";
+	include "clases/site.php";
 	switch ($view) {
 	    case '':
 	    case 'list':
-
-			include "clases/contribuyente.php";
-	    	include "modales/m_delete.php";
 			include "paginas/contribuyente/p_list.php";
 	        break;
-	    case 'form':
-	    	include "clases/contribuyente.php";
-	    	include "clases/site.php";
+	    case 'form':	    	
 	        include "paginas/contribuyente/p_form.php";
 	        break;
 	}

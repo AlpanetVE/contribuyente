@@ -347,28 +347,32 @@ $("#register-submit").click(function(){
 						 validators: {
 								 notEmpty: {
 										 message: 'No admite valor vacio'
-								 }
+								 },
+                        		blank: {}	
 						 }
 				 },
 				 rif: {
 						 validators: {
 								 notEmpty: {
 										 message: 'No admite valor vacio'
-								 }
+								 },
+                        		blank: {}	
 						 }
 				 },
 				 parroquia: {
 						 validators: {
 								 notEmpty: {
 										 message: 'No admite valor vacio'
-								 }
+								 },
+                        		blank: {}	
 						 }
 				 },
 				 telefono: {
 						 validators: {
 								 notEmpty: {
 										 message: 'No admite valor vacio'
-								 }
+								 },
+                        		blank: {}	
 						 }
 				 },
 				 correo: {
@@ -378,21 +382,24 @@ $("#register-submit").click(function(){
 								 },
 								 emailAddress: {
 			                        message: 'Correo electronico no valido'
-			                    }
+			                    },
+                        		blank: {}	
 						 }
 				 },
 				 nombre: {
 						 validators: {
 								 notEmpty: {
 										 message: 'No admite valor vacio'
-								 }
+								 },
+                        		blank: {}	
 						 }
 				 },
 				 apellido: {
 						 validators: {
 								 notEmpty: {
 										 message: 'No admite valor vacio'
-								 }
+								 },
+                        		blank: {}	
 						 }
 				 },
 				 correo_representante: {
@@ -402,14 +409,16 @@ $("#register-submit").click(function(){
 								 },
 								 emailAddress: {
 			                        message: 'Correo electronico no valido'
-			                    }
+			                    },
+                        		blank: {}	
 						 }
 				 },
 				 rif_representante: {
 						 validators: {
 								 notEmpty: {
 										 message: 'No admite valor vacio'
-								 }
+								 },
+                        		blank: {}	
 						 }
 				 }
 		 }
@@ -430,17 +439,24 @@ $("#register-submit").click(function(){
 			dataType: 'json', // el tipo de información que se espera de respuesta
 			success: function (data) {
 				if(data.result=='ok'){
-					//alert("registro con exito");
-					window.location.href = "?view=list";
+					$('.alert.success').show(500);
+					setTimeout(function(){
+						window.location.href = "?view=list";
+					}, 3000);
 				}
 
 				if (data.result === 'error'){
 					for (var field in data.fields) {
-						fv.updateMessage(field, 'blank', data.fields[field]).updateStatus(field, 'INVALID', 'blank');
-						setTimeout(function(){
-							$("#"+field).focus();
-						}, 10);
-					}
+                        fv
+                            // Show the custom message
+                            .updateMessage(field, 'blank', data.fields[field])
+                            // Set the field as invalid
+                            .updateStatus(field, 'INVALID', 'blank');
+                            setTimeout(function(){
+								$("#"+field).focus();
+							}, 10);
+
+                    } 
 				}
 			},// código a ejecutar si la petición falla;
 			error: function (xhr, status) {
