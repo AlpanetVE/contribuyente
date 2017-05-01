@@ -14,7 +14,7 @@
 		<?php include("temas/menu-admin.php"); ?>
 	</div>
 	
-	<h3 class="text-center"> Listado de Inspecciones </h3> 	
+	<h3 class="text-center"> Listado de Contribuyentes </h3> 	
 	
 	<form class="form-inline" role="form" id="filtro" name="filtro" method="POST" action="function/f_contribuyente.php">
   		<input type="hidden" id="method" name="method" value="searchfilter" />
@@ -26,7 +26,7 @@
 		</div>
 
 		<div class="form-group">  
-			<input type="text" class="form-control" id="rif" name="rif" placeholder="RIF a buscar">
+			<input type="text" class="form-control" id="rif" name="rif" maxlength="12"  placeholder="RIF a buscar">
 		</div>  
 
 		<div class="form-group">  
@@ -35,7 +35,9 @@
 		<button  class="btn btn-default" id="filtrobuscar">Buscar <span class="glyphicon glyphicon-search"></span></button>
 		<a class="imprimirContribuyente btn btn-default" >Imprimir</a>
 
-		<a class="btn btn-primary pull-right" href="?view=form" >Agregar</a>
+		<?php if($_SESSION["rol"] == 1) { ?>
+			<a class="btn btn-primary pull-right" href="?view=form" >Agregar</a>
+		<?php }?>
 	</form>
 
 	
@@ -49,8 +51,7 @@
                 <th class="text-center">RIF</th>
                 <th class="text-center">Domicilio</th>
                 <th class="text-center">Correo</th>
-                <th class="text-center">Estatus</th>
-                <th colspan="2" class="text-center">Acciones</th>     
+                <?php if($_SESSION["rol"] == 1) { ?><th colspan="2" class="text-center">Acciones</th>     <?php } ?>
             </tr>
             <tbody id="ajaxCont">
             </tbody>

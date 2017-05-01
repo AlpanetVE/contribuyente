@@ -2,7 +2,7 @@
 include_once '../clases/contribuyente.php';
 include_once '../clases/site.php';
 include_once '../clases/bd.php';
-
+session_start();
 switch ($_POST["method"]) {
 	case "new" :
 		registrar ();
@@ -25,7 +25,7 @@ switch ($_POST["method"]) {
 }
 function getMunicipios() {
 	$sitio = new site ();
-
+	$array;
 	if(isset($_POST["id_municipios"])){
 		 $id_municipios = $_POST["id_municipios"];
 	}else{
@@ -114,7 +114,7 @@ function registrar() {
 	else{
 
 
-		$data 	= array( 'razon_social' => $razon_social,'rif' => $rif,'domicilio' => $domicilio,'parroquia_id' => $parroquia_id,'telefono' => $telefono,'fax' => $fax,'correo' => $correo,'cierre_fiscal' => $cierre_fiscal,'actividad' => $actividad);
+		$data 	= array( 'razon_social' => $razon_social,'rif' => $rif,'domicilio' => $domicilio,'parroquia_id' => $parroquia_id,'telefono' => $telefono,'fax' => $fax,'correo' => $correo,'cierre_fiscal' => $cierre_fiscal,'actividad' => $actividad,'estatus_id' => $estatus_id);
 
 		$dataRp	= array( 'nombre' => $nombre,'apellido' => $apellido,'rif' => $rif_representante,'correo' => $correo_representante,'telefono' => $telefono_representante);
 
@@ -123,6 +123,7 @@ function registrar() {
 
 		$result=$contribuyente->actualizarRepresentante($contribuyente_id, $dataRp);
 
+		$result = true;
 	}
 
 
@@ -208,18 +209,16 @@ function registrar() {
                     <td><?php echo $fila["razon_social"]; ?></td>
                     <td><?php echo $fila["rif"]; ?></td>
                     <td><?php echo $fila["domicilio"]; ?></td> 
-                    <td><?php echo $fila["correo"]; ?></td>                        
-                    <td>
-                    	<a href="?view=form&id=<?php echo $fila['contribuyente_id'];?>" >
-                    		<i class="fa fa-lock" ></i> Modificar
-                    	</a>
-                    </td>
-                    <td>
-
-                    	<a href="#del" class="delete-modal" data-toggle="modal" data-target='#msj-eliminar-m' data-contribuyente_id="<?php echo $fila['contribuyente_id']; ?>" data-action='function/f_contribuyente.php' data-method='deleteContribuyente'   >
-                    		<i class="fa fa-remove"></i> Eliminar
-                    	</a> 
-                   </td> 
+                    <td><?php echo $fila["correo"]; ?></td>         
+                    <?php 
+                    
+                    if($_SESSION["rol"] == 1) { ?>               
+	                    <td>
+	                    	<a href="?view=form&id=<?php echo $fila['contribuyente_id'];?>" >
+	                    		<i class="fa fa-lock" ></i> Modificar
+	                    	</a>
+	                    </td>
+	                <?php } ?>
                     
                 </tr>
                 <?php

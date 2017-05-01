@@ -62,10 +62,9 @@ class contribuyente {
 			return false;
 
 	}
-	public function registrarContribuyente($razon_social=null,$rif=null,$domicilio=null,$parroquia_id=null,$telefono=null,$fax=null,$correo=null,$cierre_fiscal=null,$actividad=null,$status_id=null){	
+	public function registrarContribuyente($razon_social=null,$rif=null,$domicilio=null,$parroquia_id=null,$telefono=null,$fax=null,$correo=null,$cierre_fiscal=null,$actividad=null,$estatus_id=null){	
 		
 		$sql=new bd();
-		
 		$result=$sql->doInsert($this->table, array (
 				"razon_social" 	=> $razon_social,
 				"rif" 			=> $rif,
@@ -76,7 +75,7 @@ class contribuyente {
 				"correo" 		=> $correo,
 				"cierre_fiscal" => $cierre_fiscal,
 				"actividad" 	=> $actividad,
-				"status_id" 	=> $status_id
+				"estatus_id" 	=> $estatus_id
 		));
 
 		return $sql->lastInsertId();

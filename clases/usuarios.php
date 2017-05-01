@@ -452,7 +452,7 @@ function comprobarToken($token){
 		$this->a_status_usuarios_id = $status_usuarios_id;
 	}
 
-	public function setDatos($nombre,$apellido,$cedula,$usuario,$clave,$cargo,$rol){
+	public function setDatos($nombre=null,$apellido=null,$cedula=null,$usuario=null,$clave=null,$cargo=null,$rol=null){
 		$this->u_nombre = $nombre;
 		$this->u_apellido = $apellido;
 		$this->u_cedula = $cedula;

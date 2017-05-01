@@ -4,6 +4,7 @@
 		   require_once 'paginas/secure.php';
 	?>
 	<script type="text/javascript" src="js/contribuyente.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/contribuyente.css"/>
  	<body class="">
  <div >
 <?php

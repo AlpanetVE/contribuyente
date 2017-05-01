@@ -2,7 +2,7 @@
 
 $(document ).ready(function() {
 
-$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+$( ".datepicker" ).datepicker({ dateFormat: 'd M' });
 
 /*---- Funcion para validar el logueo ----**/
 $('#usr-log-form').formValidation({

@@ -58,7 +58,7 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 					</div>
 					<div class="col-lg-6">
 						<label> Rif </label>
-						<input value='<?php echo $data["rif"];?>' type="text" name="rif" id="rif" class="form-control" />
+						<input value='<?php echo $data["rif"];?>' type="text" name="rif" maxlength="12"  id="rif" class="form-control" />
 					</div>
 			        <div class="col-lg-6">
 			        	<label> Domicilio </label>	<input value='<?php echo $data["domicilio"];?>' type="text" name="domicilio" id="domicilio" class="form-control" />
@@ -116,11 +116,11 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 			        </div>
 
 			        <div class="col-lg-6">
-			        	<label> Telefono </label>	<input value='<?php echo $data["telefono"];?>' type="text" name="telefono" id="telefono" class="form-control" />
+			        	<label> Telefono </label>	<input value='<?php echo $data["telefono"];?>' type="number" name="telefono" id="telefono" class="form-control" />
 			        </div>
 
 			        <div class="col-lg-6">
-			        	<label> FAX </label>	<input value='<?php echo $data["fax"];?>' type="text" name="fax" id="fax" class="form-control" />
+			        	<label> FAX </label>	<input value='<?php echo $data["fax"];?>' type="number" name="fax" id="fax" class="form-control" />
 			        </div>
 
 			        <div class="col-lg-6">

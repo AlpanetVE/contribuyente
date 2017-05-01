@@ -34,6 +34,7 @@
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/preguntas.js"></script>
 <script type="text/javascript" src="js/busqueda.js"></script>
+<script type="text/javascript" src="js/default-datepicker.js"></script>
 
 <!--<script type="text/javascript" src="js/framework/bootstrap-multiselect.js"></script> -->
 <script type="text/javascript" src="js/manager/main.js"></script>
