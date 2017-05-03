@@ -25,11 +25,11 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 	foreach ($dataSites as $key => $value) {
 		$dataSites = $value;
 	}
-	
+
 }else{
 	$title = 'Nuevo Contribuyente';
 	$id = '';
-	$data = $dataRp =  array('razon_social' => '','rif' => '','domicilio' => '','telefono' => '','fax' => '','correo' => '','cierre_fiscal' => '','actividad' => '','nombre' => '','apellido' => '','rif' => '','correo' => '','telefono' => '');
+	$data = $dataRp =  array('razon_social' => '','rif' => '','domicilio' => '','telefono' => '','fax' => '','correo' => '','cierre_fiscal' => '','fecha_sujecion'=>'','fecha_notificacion'=>'','actividad' => '','nombre' => '','apellido' => '','rif' => '','correo' => '','telefono' => '');
 
 	$dataSites = array('estado' => '','municipio' => '','parroquia' => '','id_estado' => '','id_parroquia' => '','id_municipio' => '');
 }
@@ -68,7 +68,7 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 			        	<select name="estado" id="estado" class="form-control doAjax" data-method='getMunicipios' data-func='f_contribuyente.php'>
 						  <option>Seleccione</option>
 						  <?php
-						    foreach($estados as $estado) { 
+						    foreach($estados as $estado) {
 						    	if ($estado['id_estado']==$dataSites["id_estado"]) {
 						    		$select='selected="selected"';
 						    	}else{
@@ -85,7 +85,7 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 			        	<select name="municipio" id="municipio" class="form-control doAjax" data-method='getParroquias' data-func='f_contribuyente.php'>
 						  <option>Seleccione</option>
 						  <?php
-						    foreach($municipios as $municipio) { 
+						    foreach($municipios as $municipio) {
 						    	if ($municipio['id_municipio']==$dataSites["id_municipio"]) {
 						    		$select='selected="selected"';
 						    	}else{
@@ -102,7 +102,7 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 			        	<select name="parroquia" id="parroquia" class="form-control" >
 						  <option>Seleccione</option>
 						  <?php
-						    foreach($parroquias as $parroquia) { 
+						    foreach($parroquias as $parroquia) {
 						    	if ($parroquia['id_parroquia']==$dataSites["id_parroquia"]) {
 						    		$select='selected="selected"';
 						    	}else{
@@ -130,7 +130,15 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 			        <div class="col-lg-6">
 			        	<label> Cierre Fiscal </label>	<input value='<?php echo $data["cierre_fiscal"];?>' type="text" name="cierre_fiscal" id="cierre_fiscal" class="form-control datepicker" />
 			        </div>
-			        
+
+							<div class="col-lg-6">
+								<label>Fecha de Sujeción </label>	<input value='<?php echo $data["fecha_sujecion"];?>' type="text" name="fecha_sujecion" id="fecha_sujecion" class="form-control datepicker" />
+							</div>
+
+							<div class="col-lg-6">
+			        	<label> Fecha de Notificación</label>	<input value='<?php echo $data["fecha_notificacion"];?>' type="text" name="fecha_notificacion" id="fecha_notificacion" class="form-control datepicker" />
+			        </div>
+
 					<div class="col-lg-6" >
 				   		<label> Actividad Economica </label> <input value='<?php echo $data["actividad"];?>' type="text" name="actividad" id="actividad"  class="form-control" />
 				    </div>
@@ -174,10 +182,10 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 				    <div class="col-lg-6" >
 				   		<label> Telefono </label> <input value='<?php echo $dataRp["telefono"];?>' type="text" name="telefono_representante" id="telefono_representante"  class="form-control" />
 				    </div>
-				    
+
 				</div>
 				<div class="alert success" style="display: none;">
-				  <span class="closebtn">×</span>  
+				  <span class="closebtn">×</span>
 				  <strong>¡Exito!</strong> Los datos han sido guardados
 				</div>
 				<div class="row text-center" style="margin-top: 20px;">

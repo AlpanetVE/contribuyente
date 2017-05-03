@@ -29,6 +29,8 @@ CREATE TABLE `contribuyentes` (
   `fax` varchar(20) DEFAULT NULL,
   `correo` varchar(50) DEFAULT NULL,
   `cierre_fiscal` varchar(20) DEFAULT NULL,
+  `fecha_notificacion` varchar(20) DEFAULT NULL,
+  `fecha_sujecion` varchar(20) DEFAULT NULL,
   `actividad` varchar(255) DEFAULT NULL,
   `estatus_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`contribuyente_id`)

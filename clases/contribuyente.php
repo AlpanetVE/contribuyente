@@ -17,6 +17,9 @@ class contribuyente {
 	private $correo;
 	private $cierre_fiscal;
 	private $actividad;
+	private $fecha_notificacion;
+	private $fecha_sujecion;
+
 
 
 	private $nombre;
@@ -24,11 +27,11 @@ class contribuyente {
 	private $rif_representante;
 	private $correo_representante;
 	private $telefono_representante;
-	
-	public function getContribuyente($contribuyente_id=null,$razon_social=null,$rif=null,$domicilio=null,$parroquia_id=null,$telefono=null,$fax=null,$correo=null,$cierre_fiscal=null,$actividad=null){
-		
+
+	public function getContribuyente($contribuyente_id=null,$razon_social=null,$rif=null,$domicilio=null,$parroquia_id=null,$telefono=null,$fax=null,$correo=null,$cierre_fiscal=null,$actividad=null,$fecha_notificacion=null,$fecha_sujecion=null){
+
 		$sql=new bd();
-		
+
 		$condicion='1';
 
 		if (!empty($contribuyente_id)) {
@@ -38,15 +41,15 @@ class contribuyente {
 		$result=$sql->doFullSelect($this->table, $condicion);
 		if(!empty ($result))
 			return $result;
-		else 
+		else
 			return false;
 
 	}
-	
+
 	public function getRepresentante($representante_id=null,$contribuyente_id=null){
-		
+
 		$sql=new bd();
-		
+
 		$condicion='1';
 
 		if (!empty($contribuyente_id)) {
@@ -58,12 +61,12 @@ class contribuyente {
 		$result=$sql->doFullSelect($this->tableRepresentante, $condicion);
 		if(!empty ($result))
 			return $result;
-		else 
+		else
 			return false;
 
 	}
-	public function registrarContribuyente($razon_social=null,$rif=null,$domicilio=null,$parroquia_id=null,$telefono=null,$fax=null,$correo=null,$cierre_fiscal=null,$actividad=null,$estatus_id=null){	
-		
+	public function registrarContribuyente($razon_social=null,$rif=null,$domicilio=null,$parroquia_id=null,$telefono=null,$fax=null,$correo=null,$cierre_fiscal=null,$fecha_sujecion=null,$fecha_notificacion=null,$actividad=null,$estatus_id=null){
+
 		$sql=new bd();
 		$result=$sql->doInsert($this->table, array (
 				"razon_social" 	=> $razon_social,
@@ -74,16 +77,18 @@ class contribuyente {
 				"fax" 			=> $fax,
 				"correo" 		=> $correo,
 				"cierre_fiscal" => $cierre_fiscal,
+				"fecha_sujecion"=>$fecha_sujecion,
+				"fecha_notificacion"=>$fecha_notificacion,
 				"actividad" 	=> $actividad,
 				"estatus_id" 	=> $estatus_id
 		));
 
 		return $sql->lastInsertId();
 	}
-	public function registrarRepresentante($contribuyente_id=null,$nombre=null,$apellido=null,$rif=null,$correo=null,$telefono=null){		
-		
+	public function registrarRepresentante($contribuyente_id=null,$nombre=null,$apellido=null,$rif=null,$correo=null,$telefono=null){
+
 		$sql=new bd();
-		
+
 		$result=$sql->doInsert($this->tableRepresentante, array (
 				"contribuyente_id" 	=> $contribuyente_id,
 				"nombre" 			=> $nombre,
@@ -92,7 +97,7 @@ class contribuyente {
 				"correo" 			=> $correo,
 				"telefono" 			=> $telefono
 		));
-		
+
 		return $sql->lastInsertId();
 	}
 
@@ -113,7 +118,7 @@ class contribuyente {
 	public function getInspecciones($campos){
 		$sql=new bd();
 		$consulta="select $campos FROM $this->table WHERE 1 ";
-		
+
 		//echo $consulta;
         $result=$sql->query($consulta);
 		return $result;
@@ -122,14 +127,14 @@ class contribuyente {
 	public function borrarContribuyente($contribuyente_id){
 		$sql=new bd();
 		$consulta="DELETE FROM $this->table WHERE contribuyente_id = $contribuyente_id";
-		
+
         $result=$sql->query($consulta);
 		return $result;
 	}
 	public function borrarRepresentante($contribuyente_id){
 		$sql=new bd();
 		$consulta="DELETE FROM $this->tableRepresentante WHERE contribuyente_id = $contribuyente_id";
-		
+
         $result=$sql->query($consulta);
 		return $result;
 	}
@@ -164,7 +169,7 @@ class contribuyente {
 				INNER JOIN estatus AS s ON s.estatus_id = c.estatus_id
 				WHERE
 				1";
-		
+
 		if(!empty($rif)){
 			$query.= " AND c.rif LIKE '%$rif%'";
 		}
@@ -225,5 +230,5 @@ class contribuyente {
 
 
 
-	
+
 }

@@ -102,27 +102,28 @@ function registrar() {
 	$rif_representante		= filter_input(INPUT_POST,"rif_representante");
 	$correo_representante	= filter_input(INPUT_POST,"correo_representante");
 	$telefono_representante	= filter_input(INPUT_POST,"telefono_representante");
+	$fecha_sujecion = filter_input(INPUT_POST,"fecha_sujecion");
+	$fecha_notificacion = filter_input(INPUT_POST,"fecha_notificacion");
 
-	
 	$contribuyente_id	= filter_input(INPUT_POST,"contribuyente_id");
 
 	if (empty($contribuyente_id)) {
 
 		if (!$contribuyente->rifExist($rif)) {
-		
-			$contribuyente_id=$contribuyente->registrarContribuyente($razon_social,$rif,$domicilio,$parroquia_id,$telefono,$fax,$correo,$cierre_fiscal,$actividad,$estatus_id);
+
+			$contribuyente_id=$contribuyente->registrarContribuyente($razon_social,$rif,$domicilio,$parroquia_id,$telefono,$fax,$correo,$cierre_fiscal,$fecha_sujecion,$fecha_notificacion,$actividad,$estatus_id);
 
 			$result=$contribuyente->registrarRepresentante($contribuyente_id,$nombre,$apellido,$rif_representante,$correo_representante,$telefono_representante);
 		}else{
 			$result = false;
 			$fields = array("rif" => "Este rif ya esta en uso");
 		}
-		
-		
+
+
 	}
 	else{
 
-		$data 	= array( 'razon_social' => $razon_social,'rif' => $rif,'domicilio' => $domicilio,'parroquia_id' => $parroquia_id,'telefono' => $telefono,'fax' => $fax,'correo' => $correo,'cierre_fiscal' => $cierre_fiscal,'actividad' => $actividad,'estatus_id' => $estatus_id);
+		$data 	= array( 'razon_social' => $razon_social,'rif' => $rif,'domicilio' => $domicilio,'parroquia_id' => $parroquia_id,'telefono' => $telefono,'fax' => $fax,'correo' => $correo,'cierre_fiscal' => $cierre_fiscal, 'fecha_sujecion'=>$fecha_sujecion, 'fecha_notificacion'=>$fecha_notificacion,'actividad' => $actividad,'estatus_id' => $estatus_id);
 
 		$dataRp	= array( 'nombre' => $nombre,'apellido' => $apellido,'rif' => $rif_representante,'correo' => $correo_representante,'telefono' => $telefono_representante);
 
@@ -164,7 +165,7 @@ function registrar() {
 		$result = false;
 	}
 
- 	
+
 
 
  	if($result){
@@ -195,44 +196,43 @@ function registrar() {
 	$rifComienza 	= filter_input(INPUT_POST,"rifComienza");
 	$rifTermina 	= filter_input(INPUT_POST,"rifTermina");
 
-	 
+
 	$objContribuyente 	= new contribuyente();
 
 	$data = $objContribuyente -> getAllData($rif,$id_estado,$id_municipio,$id_parroquia,$estatus_id,$rifComienza ,$rifTermina, $limit);
 
 	 if(!empty($data)){
-	 	
+
 		 ?>
 		 <?php
 		foreach ($data as $fila) {
-                ?>            
+                ?>
                 <tr>
                     <td><?php echo $fila["razon_social"]; ?></td>
                     <td><?php echo $fila["rif"]; ?></td>
-                    <td><?php echo $fila["domicilio"]; ?></td> 
-                    <td><?php echo $fila["correo"]; ?></td>         
-                    <?php 
-                    
-                    if($_SESSION["rol"] == 1) { ?>               
+                    <td><?php echo $fila["domicilio"]; ?></td>
+                    <td><?php echo $fila["correo"]; ?></td>
+                    <?php
+
+                    if($_SESSION["rol"] == 1) { ?>
 	                    <td>
 	                    	<a href="?view=form&id=<?php echo $fila['contribuyente_id'];?>" >
 	                    		<i class="fa fa-lock" ></i> Modificar
 	                    	</a>
 	                    </td>
 	                <?php } ?>
-                    
+
                 </tr>
                 <?php
             }
             ?>
-            
-	 <?php	
 
-		
+	 <?php
+
+
 	 }
 	 else{
 	 	?> <p> Vacio</p>
 	  <?php }
 
 }
- 
