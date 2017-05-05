@@ -306,12 +306,12 @@ $("#register-submit").click(function(){
 							 }
 					 });
 			 });
- 	
+
  	$(document).on('change',".doAjax",function(e){
 		var method 	= 'method='+$(this).data('method');
 		var func 	= 'function/'+$(this).data('func');
 		var val 	= '&val='+$(this).val();
-		
+
 	    $.ajax({
 			url: func,
 			data: method + val,
@@ -320,8 +320,8 @@ $("#register-submit").click(function(){
 			success: function (data) {
 
 				if(data.result=='ok'){
-					$(data.inputRemove).remove();		
-					$(data.input).append('<option value="">Seleccione</option>')			
+					$(data.inputRemove).remove();
+					$(data.input).append('<option value="">Seleccione</option>')
 				    $.each(data.campos, function(){
 				        $(data.input).append('<option value="'+ this.value +'">'+ this.name +'</option>');
 				    })
@@ -331,9 +331,9 @@ $("#register-submit").click(function(){
 				alert(status);
 			}
 		});
-	});	 
-		
-			 
+	});
+
+
 	$('#reg-contribuyente').formValidation({
 		locale: 'es_ES',
 		 framework: 'bootstrap',
@@ -348,7 +348,7 @@ $("#register-submit").click(function(){
 								 notEmpty: {
 										 message: 'No admite valor vacio'
 								 },
-                        		blank: {}	
+                        		blank: {}
 						 }
 				 },
 				 rif: {
@@ -356,7 +356,7 @@ $("#register-submit").click(function(){
 								 notEmpty: {
 										 message: 'No admite valor vacio'
 								 },
-                        		blank: {}	
+                        		blank: {}
 						 }
 				 },
 				 parroquia: {
@@ -364,15 +364,25 @@ $("#register-submit").click(function(){
 								 notEmpty: {
 										 message: 'No admite valor vacio'
 								 },
-                        		blank: {}	
+                        		blank: {}
 						 }
 				 },
 				 telefono: {
 						 validators: {
+							 	digits:{},
 								 notEmpty: {
 										 message: 'No admite valor vacio'
 								 },
-                        		blank: {}	
+                        		blank: {}
+						 }
+				 },
+				 fax: {
+						 validators: {
+								digits:{},
+								 notEmpty: {
+										 message: 'No admite valor vacio'
+								 },
+														blank: {}
 						 }
 				 },
 				 correo: {
@@ -383,7 +393,7 @@ $("#register-submit").click(function(){
 								 emailAddress: {
 			                        message: 'Correo electronico no valido'
 			                    },
-                        		blank: {}	
+                        		blank: {}
 						 }
 				 },
 				 nombre: {
@@ -391,7 +401,7 @@ $("#register-submit").click(function(){
 								 notEmpty: {
 										 message: 'No admite valor vacio'
 								 },
-                        		blank: {}	
+                        		blank: {}
 						 }
 				 },
 				 apellido: {
@@ -399,7 +409,7 @@ $("#register-submit").click(function(){
 								 notEmpty: {
 										 message: 'No admite valor vacio'
 								 },
-                        		blank: {}	
+                        		blank: {}
 						 }
 				 },
 				 correo_representante: {
@@ -410,22 +420,31 @@ $("#register-submit").click(function(){
 								 emailAddress: {
 			                        message: 'Correo electronico no valido'
 			                    },
-                        		blank: {}	
+                        		blank: {}
 						 }
 				 },
+				 telefono_representante: {
+						validators: {
+							 digits:{},
+								notEmpty: {
+										message: 'No admite valor vacio'
+								},
+													 blank: {}
+						}
+				},
 				 rif_representante: {
 						 validators: {
 								 notEmpty: {
 										 message: 'No admite valor vacio'
 								 },
-                        		blank: {}	
+                        		blank: {}
 						 }
 				 }
 		 }
 		 }).on('success.field.fv', function(e, data) {
-		  
+
 	}).on('err.form.fv', function(e,data) {
-	  
+
 	}).on('success.form.fv', function(e) {
 
 		e.preventDefault();
@@ -456,7 +475,7 @@ $("#register-submit").click(function(){
 								$("#"+field).focus();
 							}, 10);
 
-                    } 
+                    }
 				}
 			},// código a ejecutar si la petición falla;
 			error: function (xhr, status) {

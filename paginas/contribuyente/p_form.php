@@ -116,11 +116,11 @@ if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
 			        </div>
 
 			        <div class="col-lg-6">
-			        	<label> Telefono </label>	<input value='<?php echo $data["telefono"];?>' type="number" name="telefono" id="telefono" class="form-control" />
+			        	<label> Telefono </label>	<input value='<?php echo $data["telefono"];?>' type="text" maxlength="11" name="telefono" id="telefono" class="form-control" />
 			        </div>
 
 			        <div class="col-lg-6">
-			        	<label> FAX </label>	<input value='<?php echo $data["fax"];?>' type="number" name="fax" id="fax" class="form-control" />
+			        	<label> FAX </label>	<input value='<?php echo $data["fax"];?>'  name="fax" id="fax" class="form-control" />
 			        </div>
 
 			        <div class="col-lg-6">
